@@ -2,7 +2,7 @@ import React from "react";
 /** @jsxImportSource @emotion/react */ import { css } from "@emotion/react";
 
 const LandingStyle = css({
-  color: "red",
+  padding: "1em",
   fontWeight: 500,
   fontSize: "3rem",
   textAlign: "center",

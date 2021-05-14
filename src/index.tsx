@@ -7,7 +7,9 @@ import LandingPage from "./views/LandingPage";
 
 const App: React.FC = () => (
   <Router basename="/">
-    <LandingPage />
+    <Switch>
+      <Route exact path="/" component={LandingPage} />
+    </Switch>
   </Router>
 );
 
