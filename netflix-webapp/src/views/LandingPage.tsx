@@ -6,6 +6,8 @@ const LandingStyle = css({
   fontWeight: 500,
   fontSize: "3rem",
   textAlign: "center",
+  backgroundColor: "black",
+  color:"white"
 });
 
 const LandingPage: React.FC = () => {
