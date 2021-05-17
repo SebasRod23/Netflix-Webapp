@@ -20,17 +20,69 @@ const ELementBox = ({ color }: { color: String }) =>
     alignItems: "center",
     justifyContent: "center",
     cursor: "pointer",
-    backgroundColor: color === "uno" ? "#423D3D" : "#E3CFCF",
+    backgroundColor: color === "Movie" ? "#423D3D" : "#E3CFCF",
     color: color === "uno" ? "white" : "black",
   });
 interface ListPrompts {
-  data: string[];
+  list: {
+    show_id: string;
+    type: "Movie" | "TV Show";
+    title: string;
+    director: string;
+    cast: string[];
+    country: string;
+    date_added: string;
+    release_year: number;
+    rating: string;
+    duration: string;
+    listed_in: string[];
+    description: string;
+  }[];
 }
 
-const ListView: React.FC<ListPrompts> = ({ data }) => {
+const ListView: React.FC<ListPrompts> = ({ list }) => {
   const [open, setOpen] = useState(false);
-  const [elementData, setElementData] = useState("");
-  const handleOpen = (elementData: string) => {
+  const [elementData, setElementData] = useState({
+    show_id: "",
+    type: "Movie",
+    title: "",
+    director: "",
+    cast: [""],
+    country: "",
+    date_added: "",
+    release_year: 0,
+    rating: "",
+    duration: "",
+    listed_in: [""],
+    description: "",
+  } as {
+    show_id: string;
+    type: "Movie" | "TV Show";
+    title: string;
+    director: string;
+    cast: string[];
+    country: string;
+    date_added: string;
+    release_year: number;
+    rating: string;
+    duration: string;
+    listed_in: string[];
+    description: string;
+  });
+  const handleOpen = (elementData: {
+    show_id: string;
+    type: "Movie" | "TV Show";
+    title: string;
+    director: string;
+    cast: string[];
+    country: string;
+    date_added: string;
+    release_year: number;
+    rating: string;
+    duration: string;
+    listed_in: string[];
+    description: string;
+  }) => {
     setOpen(true);
     setElementData(elementData);
   };
@@ -39,12 +91,12 @@ const ListView: React.FC<ListPrompts> = ({ data }) => {
   };
   return (
     <div css={ListStyle}>
-      {data.map((element) => (
+      {list.map((element) => (
         <div
-          css={ELementBox({ color: element })}
+          css={ELementBox({ color: element.type })}
           onClick={() => handleOpen(element)}
         >
-          <h2>{element}</h2>
+          <h2>{element.title}</h2>
         </div>
       ))}
       <MultimediaModal

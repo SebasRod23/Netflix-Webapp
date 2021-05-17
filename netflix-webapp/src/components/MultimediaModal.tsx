@@ -10,7 +10,20 @@ const ModalStyle = css({
 });
 
 interface ModalPrompts {
-  data: String;
+  data: {
+    show_id: string;
+    type: "Movie" | "TV Show";
+    title: string;
+    director: string;
+    cast: string[];
+    country: string;
+    date_added: string;
+    release_year: number;
+    rating: string;
+    duration: string;
+    listed_in: string[];
+    description: string;
+  };
   open: boolean;
   handleClose: () => void;
 }
@@ -23,7 +36,7 @@ const MultimediaModal: React.FC<ModalPrompts> = ({
   return (
     <Modal open={open} onClose={handleClose}>
       <div css={ModalStyle}>
-        <h2>{data}</h2>
+        <h2>{data.description}</h2>
       </div>
     </Modal>
   );
