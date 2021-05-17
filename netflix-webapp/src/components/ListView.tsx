@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 /** @jsxImportSource @emotion/react */ import { css } from "@emotion/react";
-import { Modal } from "@material-ui/core";
+import MultimediaModal from "./MultimediaModal";
 
 const ListStyle = css({
   backgroundColor: "blue",
@@ -24,13 +24,15 @@ const ELementBox = ({ color }: { color: String }) =>
     color: color === "uno" ? "white" : "black",
   });
 interface ListPrompts {
-  data: String[];
+  data: string[];
 }
 
 const ListView: React.FC<ListPrompts> = ({ data }) => {
   const [open, setOpen] = useState(false);
-  const handleOpen = () => {
+  const [elementData, setElementData] = useState("");
+  const handleOpen = (elementData: string) => {
     setOpen(true);
+    setElementData(elementData);
   };
   const handleClose = () => {
     setOpen(false);
@@ -38,18 +40,18 @@ const ListView: React.FC<ListPrompts> = ({ data }) => {
   return (
     <div css={ListStyle}>
       {data.map((element) => (
-        <div css={ELementBox({ color: element })} onClick={handleOpen}>
+        <div
+          css={ELementBox({ color: element })}
+          onClick={() => handleOpen(element)}
+        >
           <h2>{element}</h2>
         </div>
       ))}
-      <Modal
+      <MultimediaModal
+        data={elementData}
         open={open}
-        onClose={handleClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-        <h1 style={{ color: "wheat" }}>Hello World</h1>
-      </Modal>
+        handleClose={handleClose}
+      />
     </div>
   );
 };
