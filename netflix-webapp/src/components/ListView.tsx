@@ -4,9 +4,11 @@ import MultimediaModal from "./MultimediaModal";
 
 const ListStyle = css({
   width: "100%",
+  minHeight: "calc(100vh - 96px)",
   display: "flex",
   flexWrap: "wrap",
   justifyContent: "center",
+  alignContent: "center",
 });
 
 const ELementBox = ({ color }: { color: String }) =>
@@ -19,8 +21,10 @@ const ELementBox = ({ color }: { color: String }) =>
     alignItems: "center",
     justifyContent: "center",
     cursor: "pointer",
-    backgroundColor: color === "Movie" ? "#423D3D" : "#E3CFCF",
-    color: color === "Movie" ? "white" : "black",
+    backgroundColor:
+      color === "Movie" ? "rgb(66, 61, 61, 32%)" : "rgb(227, 207, 207, 32%)",
+    color: "white",
+    borderRadius: "10px",
   });
 interface ListPrompts {
   list: {

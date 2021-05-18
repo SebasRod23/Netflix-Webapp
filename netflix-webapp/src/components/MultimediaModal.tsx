@@ -3,10 +3,20 @@ import React from "react";
 import { Modal } from "@material-ui/core";
 
 const ModalStyle = css({
+  "@keyframes appear": {
+    "0%": {
+      opacity: "0%",
+    },
+    "100%": {
+      opacity: "100%",
+    },
+  },
+
   width: "80%",
   height: "80vh",
   margin: "10vh auto",
   color: "white",
+  animation: "0.25s ease-out 0s 1 appear",
 });
 const CloseBttnStyle = css({
   "@keyframes left": {
@@ -158,7 +168,7 @@ const MultimediaModal: React.FC<ModalPrompts> = ({
           <div></div>
           <div></div>
         </div>
-        <div css={ContentStyle}>
+        <div css={ContentStyle} id="modal-content">
           <div css={TitleStyle}>
             <h1>{data.title}</h1>
             <div></div>
