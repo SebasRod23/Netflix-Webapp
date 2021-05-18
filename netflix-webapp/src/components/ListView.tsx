@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import MultimediaModal from "./MultimediaModal";
 
 const ListStyle = css({
-  backgroundColor: "blue",
   width: "100%",
   display: "flex",
   flexWrap: "wrap",
@@ -21,7 +20,7 @@ const ELementBox = ({ color }: { color: String }) =>
     justifyContent: "center",
     cursor: "pointer",
     backgroundColor: color === "Movie" ? "#423D3D" : "#E3CFCF",
-    color: color === "uno" ? "white" : "black",
+    color: color === "Movie" ? "white" : "black",
   });
 interface ListPrompts {
   list: {
