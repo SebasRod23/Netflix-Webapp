@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 /** @jsxImportSource @emotion/react */ import Autocomplete from "@material-ui/lab/Autocomplete";
-/** @jsxImportSource @emotion/react */ import SearchIcon from '@material-ui/icons/Search';
+/** @jsxImportSource @emotion/react */ import SearchIcon from "@material-ui/icons/Search";
 /** @jsxImportSource @emotion/react */ import {
   TextField,
   Select,
   FormControl,
   InputLabel,
   MenuItem,
-  Button
+  Button,
 } from "@material-ui/core";
 
-const top100Films = [
+const data = [
   { title: "The Shawshank Redemption", year: 1994 },
   { title: "The Godfather", year: 1972 },
   { title: "The Godfather: Part II", year: 1974 },
@@ -19,10 +19,25 @@ const top100Films = [
   { title: "Schindler's List", year: 1993 },
 ];
 
-
+interface ModalPrompts {
+  data: {
+    show_id: string;
+    type: "Movie" | "TV Show";
+    title: string;
+    director: string;
+    cast: string[];
+    country: string;
+    date_added: string;
+    release_year: number;
+    rating: string;
+    duration: string;
+    listed_in: string[];
+    description: string;
+  };
+}
 
 const SearchFiltersViews: React.FC = () => {
-  const [filterOptions, setFilterOptions] = React.useState('');
+  const [filterOptions, setFilterOptions] = React.useState("");
   const handleChangeSelect = (event: React.ChangeEvent<{ value: unknown }>) => {
     setFilterOptions(event.target.value as string);
   };
@@ -30,7 +45,7 @@ const SearchFiltersViews: React.FC = () => {
     <div>
       <Autocomplete
         id="search-bar"
-        options={top100Films.map((movie) => movie.title)}
+        options={data.map((data) => data.title)}
         renderInput={(params) => (
           <TextField {...params} label="Movie" margin="normal" />
         )}
@@ -48,18 +63,12 @@ const SearchFiltersViews: React.FC = () => {
           <MenuItem value={"Tv Show"}>Tv Show</MenuItem>
         </Select>
       </FormControl>
-      <Button
-        variant="contained"
-        color="secondary"
-        startIcon={<SearchIcon />}
-      >
+      <Button variant="contained" color="secondary" startIcon={<SearchIcon />}>
         Search
       </Button>
       <h1>Search Filters</h1>
     </div>
   );
 };
-
-
 
 export default SearchFiltersViews;
