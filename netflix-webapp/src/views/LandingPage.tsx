@@ -1,5 +1,6 @@
 import React from "react";
 /** @jsxImportSource @emotion/react */ import { css } from "@emotion/react";
+import HeaderView from "../components/HeaderView";
 
 const LandingStyle = css({
   padding: "1em",
@@ -7,13 +8,16 @@ const LandingStyle = css({
   fontSize: "3rem",
   textAlign: "center",
   backgroundColor: "black",
-  color:"white"
+  color: "white",
 });
 
 const LandingPage: React.FC = () => {
   return (
-    <div css={LandingStyle}>
-      <h1>Netflix Webapp</h1>
+    <div>
+      <HeaderView />
+      {/* <div css={LandingStyle}>
+        <h1>Netflix Webapp</h1>
+      </div> */}
     </div>
   );
 };
