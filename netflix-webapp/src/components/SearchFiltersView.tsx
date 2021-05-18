@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 /** @jsxImportSource @emotion/react */ import Autocomplete from "@material-ui/lab/Autocomplete";
+/** @jsxImportSource @emotion/react */ import SearchIcon from '@material-ui/icons/Search';
 /** @jsxImportSource @emotion/react */ import {
   TextField,
   Select,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Button
 } from "@material-ui/core";
 
 const top100Films = [
@@ -14,7 +19,13 @@ const top100Films = [
   { title: "Schindler's List", year: 1993 },
 ];
 
+
+
 const SearchFiltersViews: React.FC = () => {
+  const [filterOptions, setFilterOptions] = React.useState('');
+  const handleChangeSelect = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setFilterOptions(event.target.value as string);
+  };
   return (
     <div>
       <Autocomplete
@@ -24,9 +35,31 @@ const SearchFiltersViews: React.FC = () => {
           <TextField {...params} label="Movie" margin="normal" />
         )}
       />
+      <FormControl>
+        <InputLabel id="options-label">options</InputLabel>
+        <Select
+          labelId="options-label"
+          id="options"
+          value={filterOptions}
+          onChange={handleChangeSelect}
+        >
+          <MenuItem value={"Movie"}>Movie</MenuItem>
+          <MenuItem value={"Actor"}>Actor</MenuItem>
+          <MenuItem value={"Tv Show"}>Tv Show</MenuItem>
+        </Select>
+      </FormControl>
+      <Button
+        variant="contained"
+        color="secondary"
+        startIcon={<SearchIcon />}
+      >
+        Search
+      </Button>
       <h1>Search Filters</h1>
     </div>
   );
 };
+
+
 
 export default SearchFiltersViews;
