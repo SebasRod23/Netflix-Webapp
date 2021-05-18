@@ -6,10 +6,12 @@ import SearchFiltersViews from "../components/SearchFiltersView";
 const LandingStyle = css({
   padding: "1em",
   fontWeight: 500,
-  fontSize: "3rem",
   textAlign: "center",
-  backgroundColor: "black",
+  backgroundColor: "#141313",
   color: "white",
+  h1: {
+    fontSize: "3rem",
+  },
 });
 
 const LandingPage: React.FC = () => {
