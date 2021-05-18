@@ -27,7 +27,7 @@ const data: {
   description: string;
 }[] = [
   {
-    show_id: "1",
+    show_id: "0",
     type: "Movie",
     title: "The Last Jedi",
     director: "Rian Johnson",
@@ -41,7 +41,7 @@ const data: {
     description: "The second best fucking star wars movie",
   },
   {
-    show_id: "2",
+    show_id: "1",
     type: "TV Show",
     title: "B99",
     director: "Someone",
@@ -112,7 +112,6 @@ const data: {
   },
 ];
 const LandingPage: React.FC = () => {
-  console.log(data);
   return (
     <div css={LandingStyle}>
       <h1>Netflix Webapp</h1>

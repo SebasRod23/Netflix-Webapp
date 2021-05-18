@@ -43,11 +43,11 @@ const CloseBttnStyle = css({
     backgroundColor: "white",
     position: "absolute",
   },
-  "div:first-child": {
+  "div:first-of-type": {
     animation: "0.5s ease-out 0s 1 left",
     transform: "rotate(-45deg)",
   },
-  "div:last-child": {
+  "div:last-of-type": {
     animation: "0.5s ease-out 0s 1 right",
     transform: "rotate(45deg)",
   },

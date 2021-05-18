@@ -94,6 +94,7 @@ const ListView: React.FC<ListPrompts> = ({ list }) => {
         <div
           css={ELementBox({ color: element.type })}
           onClick={() => handleOpen(element)}
+          key={element.show_id}
         >
           <h2>{element.title}</h2>
         </div>
