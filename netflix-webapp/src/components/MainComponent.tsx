@@ -39,7 +39,7 @@ const data: {
     cast: ["Melissa Fumero"],
     country: "USA",
     date_added: "2016",
-    release_year: 2011,
+    release_year: 2013,
     rating: "5 stars",
     duration: "6 seasons",
     listed_in: ["best comedies"],
