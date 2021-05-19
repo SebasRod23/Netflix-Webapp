@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 /** @jsxImportSource @emotion/react */ import { css } from "@emotion/react";
 import HeaderView from "../components/HeaderView";
-import SearchFiltersViews from "../components/SearchFiltersView";
+import MainComponent from "../components/MainComponent";
 
 const LandingStyle = css({
   padding: "1em",
@@ -15,13 +15,11 @@ const LandingStyle = css({
 });
 
 const LandingPage: React.FC = () => {
+  const [activeComp, setActiveComp] = useState<string>("search");
   return (
     <div>
-      <HeaderView />
-      <SearchFiltersViews />
-      {/* <div css={LandingStyle}>
-        <h1>Netflix Webapp</h1>
-      </div> */}
+      <HeaderView activeComp={activeComp} setActiveComp={setActiveComp} />
+      <MainComponent activeComp={activeComp} />
     </div>
   );
 };

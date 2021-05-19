@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 /** @jsxImportSource @emotion/react */ import { css } from "@emotion/react";
 /** @jsxImportSource @emotion/react */ import { Button } from "@material-ui/core";
 
@@ -24,13 +24,16 @@ const HeaderTitle = css({
   color: "white",
 });
 
-const HeaderView: React.FC = () => {
-  const [activeButton, setActiveButton] = useState("search");
+interface ActiveProps {
+  activeComp: string;
+  setActiveComp: React.Dispatch<React.SetStateAction<string>>;
+}
 
+const HeaderView: React.FC<ActiveProps> = ({ activeComp, setActiveComp }) => {
   const handleActiveBut = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    setActiveButton(event.currentTarget.id);
+    setActiveComp(event.currentTarget.id);
   };
 
   return (
@@ -41,14 +44,15 @@ const HeaderView: React.FC = () => {
       <div css={DivTitleStyle}>
         <Button
           id="search"
-          style={{ color: activeButton === "search" ? "red" : "white" }}
+          style={{ color: activeComp === "search" ? "red" : "white" }}
           onClick={handleActiveBut}
         >
           SEARCH
         </Button>
         <Button
           id="statistics"
-          style={{ color: activeButton === "statistics" ? "red" : "white" }}
+          color="primary"
+          style={{ color: activeComp === "statistics" ? "red" : "white" }}
           onClick={handleActiveBut}
         >
           STATISTICS

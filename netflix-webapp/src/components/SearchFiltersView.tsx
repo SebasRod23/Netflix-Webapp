@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 /** @jsxImportSource @emotion/react */ import Autocomplete from "@material-ui/lab/Autocomplete";
 /** @jsxImportSource @emotion/react */ import SearchIcon from "@material-ui/icons/Search";
 /** @jsxImportSource @emotion/react */ import {
@@ -19,28 +19,19 @@ const data = [
   { title: "Schindler's List", year: 1993 },
 ];
 
-interface ModalPrompts {
-  data: {
-    show_id: string;
-    type: "Movie" | "TV Show";
-    title: string;
-    director: string;
-    cast: string[];
-    country: string;
-    date_added: string;
-    release_year: number;
-    rating: string;
-    duration: string;
-    listed_in: string[];
-    description: string;
-  };
+interface ActiveProps {
+  activeComp: string;
+  setActiveComp?: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const SearchFiltersViews: React.FC = () => {
+const SearchFiltersViews: React.FC<ActiveProps> = ({ activeComp }) => {
   const [filterOptions, setFilterOptions] = React.useState("");
   const handleChangeSelect = (event: React.ChangeEvent<{ value: unknown }>) => {
     setFilterOptions(event.target.value as string);
   };
+  const searchOptions = ["Movie", "Actor", "TvShow"];
+  const statisticsOptions = ["General", "Country", "Release"];
+  let listOptions = activeComp === "search" ? searchOptions : statisticsOptions;
   return (
     <div>
       <Autocomplete
@@ -58,9 +49,9 @@ const SearchFiltersViews: React.FC = () => {
           value={filterOptions}
           onChange={handleChangeSelect}
         >
-          <MenuItem value={"Movie"}>Movie</MenuItem>
-          <MenuItem value={"Actor"}>Actor</MenuItem>
-          <MenuItem value={"Tv Show"}>Tv Show</MenuItem>
+          {listOptions.map((option) => (
+            <MenuItem value={option}>{option}</MenuItem>
+          ))}
         </Select>
       </FormControl>
       <Button variant="contained" color="secondary" startIcon={<SearchIcon />}>
