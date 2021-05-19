@@ -1,21 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 /** @jsxImportSource @emotion/react */ import { css } from "@emotion/react";
-
-const LandingStyle = css({
-  padding: "1em",
-  fontWeight: 500,
-  textAlign: "center",
-  backgroundColor: "#141313",
-  color: "white",
-  h1: {
-    fontSize: "3rem",
-  },
-});
+import HeaderView from "../components/HeaderView";
+import MainComponent from "../components/MainComponent";
 
 const LandingPage: React.FC = () => {
+  const [activeComp, setActiveComp] = useState<string>("search");
   return (
-    <div css={LandingStyle}>
-      <h1>Netflix Webapp</h1>
+    <div>
+      <HeaderView activeComp={activeComp} setActiveComp={setActiveComp} />
+      <MainComponent activeComp={activeComp} />
     </div>
   );
 };
