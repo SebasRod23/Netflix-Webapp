@@ -3,17 +3,6 @@ import React, { useState } from "react";
 import HeaderView from "../components/HeaderView";
 import MainComponent from "../components/MainComponent";
 
-const LandingStyle = css({
-  padding: "1em",
-  fontWeight: 500,
-  textAlign: "center",
-  backgroundColor: "#141313",
-  color: "white",
-  h1: {
-    fontSize: "3rem",
-  },
-});
-
 const LandingPage: React.FC = () => {
   const [activeComp, setActiveComp] = useState<string>("search");
   return (

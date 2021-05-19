@@ -38,7 +38,7 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({ activeComp }) => {
         id="search-bar"
         options={data.map((data) => data.title)}
         renderInput={(params) => (
-          <TextField {...params} label="Movie" margin="normal" />
+          <TextField {...params} label="Search info" margin="normal" />
         )}
       />
       <FormControl>
@@ -50,7 +50,9 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({ activeComp }) => {
           onChange={handleChangeSelect}
         >
           {listOptions.map((option) => (
-            <MenuItem value={option}>{option}</MenuItem>
+            <MenuItem key={option} value={option}>
+              {option}
+            </MenuItem>
           ))}
         </Select>
       </FormControl>
