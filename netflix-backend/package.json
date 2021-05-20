@@ -1,6 +1,8 @@
 {
   "dependencies": {
+    "@types/mongoose": "^5.10.5",
     "express": "^4.17.1",
-    "mongodb": "^3.6.6"
+    "mongodb": "^3.6.6",
+    "mongoose": "^5.12.10"
   }
 }
