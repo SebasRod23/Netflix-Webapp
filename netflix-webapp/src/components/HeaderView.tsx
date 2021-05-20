@@ -5,11 +5,12 @@ import React from "react";
 const HeaderStyle = css({
   padding: "1em",
   backgroundColor: "black",
-  maxWidth: "100%",
+  width: "90%",
   display: "flex",
   flexWrap: "nowrap",
   justifyContent: "space-between",
   alignItems: "center",
+  margin: "0 auto 3rem",
 });
 
 const DivTitleStyle = css({

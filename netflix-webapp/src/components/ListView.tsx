@@ -22,7 +22,7 @@ const ELementBox = ({ color }: { color: String }) =>
     justifyContent: "center",
     cursor: "pointer",
     backgroundColor:
-      color === "Movie" ? "rgb(66, 61, 61, 32%)" : "rgb(227, 207, 207, 32%)",
+      color === "Movie" ? "rgb(77, 77, 77, 32%)" : "rgb(245, 245, 245, 32%)",
     color: "white",
     borderRadius: "10px",
   });
