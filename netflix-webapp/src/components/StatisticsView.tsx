@@ -5,7 +5,7 @@ import Chart from "./Chart"
 
 const StatisticsStyle = css({
   padding: "1em",
-  height: "77.8vh ",
+  height: "67vh ",
   fontSize: "2rem",
   display:"flex",
   flexDirection:"column",

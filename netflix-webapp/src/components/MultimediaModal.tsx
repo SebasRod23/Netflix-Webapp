@@ -12,7 +12,7 @@ const ModalStyle = css({
     },
   },
 
-  width: "80%",
+  width: "100%",
   height: "80vh",
   margin: "10vh auto",
   color: "white",

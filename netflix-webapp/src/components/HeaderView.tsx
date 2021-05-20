@@ -5,7 +5,7 @@ import React from "react";
 const HeaderStyle = css({
   padding: "1em",
   backgroundColor: "black",
-  width: "100%",
+  maxWidth: "100%",
   display: "flex",
   flexWrap: "nowrap",
   justifyContent: "space-between",
