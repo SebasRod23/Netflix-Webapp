@@ -1,43 +1,28 @@
-import express from "express";
-import MongoClient from "mongodb";
+import express from 'express';
+import cors from 'cors';
+import mongoose from 'mongoose';
+import router from '../routes/data';
 
 const app = express();
 
 const port = process.env.PORT || 3010;
 
-const connectionString =
-  "mongodb+srv://Gi:M0NG0P4ssword@cluster0.3qjoe.mongodb.net/NetflixDB?retryWrites=true&w=majority";
+app.use(cors());
+app.use(express.json());
+const uri =
+  'mongodb+srv://Gi:M0NG0P4ssword@cluster0.3qjoe.mongodb.net/NetflixDB?retryWrites=true&w=majority';
 
-MongoClient.connect(connectionString, { useUnifiedTopology: true })
-  .then((client) => {
-    console.log("Connected to Netflix Database");
-    const db = client.db("NetflixDB");
+mongoose.connect(uri as string, {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+});
+const connection = mongoose.connection;
 
-    app.get("/", (req, res) => {
-      db.collection("netflixData")
-        .find()
-        .toArray()
-        .then((results) => {
-          console.log(results);
-        })
-        .catch((error) => console.error(error));
-      // ...
-    });
-
-    /*app.get("/search", (req, res) => {
-      db.collection("netflixData")
-        .find({ type: "TV Show" })
-        .toArray()
-        .then((size) => {
-          size.map((element) => {
-            console.log(size);
-          });
-        });
-      // ...
-    });*/
-  })
-  .catch((error) => console.error(error));
-
+connection.once('open', () => {
+  console.log('MongoDB database connection established successfully');
+});
+const dataRouter = router;
+app.use('/', dataRouter);
 app.listen(port, () => {
   console.log(`Server listening on http://localhost:${port}`);
 });
