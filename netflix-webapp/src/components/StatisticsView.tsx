@@ -1,24 +1,21 @@
 import React from "react";
-import Chart from "./Chart"
+import Chart from "./Chart";
 /** @jsxImportSource @emotion/react */ import { css } from "@emotion/react";
-
 
 const StatisticsStyle = css({
   padding: "1em",
-  height: "77.8vh ",
   fontSize: "2rem",
-  display:"flex",
-  flexDirection:"column",
-
+  display: "flex",
+  flexDirection: "column",
 });
-  
+
 const StatisticsView: React.FC = () => {
   return (
     <div css={StatisticsStyle}>
       <h1>Statistics</h1>
-      <Chart/>
+      <Chart />
     </div>
   );
 };
-  
-  export default StatisticsView;
+
+export default StatisticsView;
