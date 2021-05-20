@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import ListView from "./ListView";
 import SearchFiltersViews from "./SearchFiltersView";
 import StatisticsView from "./StatisticsView";
+import { Link } from "react-router-dom";
+import axios, { AxiosResponse } from "axios";
 
 const data: {
   show_id: string;
@@ -47,12 +49,46 @@ const data: {
   },
 ];
 
+interface IData {
+  show_id: string;
+  type: string;
+  title: string;
+  director: string;
+  cast: string;
+  country: string;
+  date_added: string;
+  release_year: Number;
+  rating: string;
+  duration: string;
+  listed_in: string;
+  description: string;
+}
+
 interface ActiveProps {
   activeComp: string;
   setActiveComp?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const MainComponent: React.FC<ActiveProps> = ({ activeComp }) => {
+  const [datas, setDatas] = useState<IData[]>([]);
+
+  const getTodos = async (): Promise<AxiosResponse<any>> => {
+    try {
+      const todos: AxiosResponse<any> = await axios.get(
+        "http://localhost:3010/"
+      );
+      return todos;
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+
+  getTodos()
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((err: Error) => console.log(err));
+
   let renderedComp =
     activeComp === "search" ? <ListView list={data} /> : <StatisticsView />;
   return (
