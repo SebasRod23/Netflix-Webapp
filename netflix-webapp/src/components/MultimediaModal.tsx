@@ -12,7 +12,7 @@ const ModalStyle = css({
     },
   },
 
-  width: "80%",
+  width: "90%",
   height: "80vh",
   margin: "10vh auto",
   color: "white",
@@ -62,21 +62,22 @@ const CloseBttnStyle = css({
     transform: "rotate(45deg)",
   },
 });
-const ContentStyle = css({
-  backgroundColor: "rgb(22, 23, 26)",
-  padding: "1em",
-  height: "100%",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "space-around",
-  overflowX: "hidden",
-  overflowY: "auto",
-  span: {
-    fontWeight: "bold",
-    marginRight: "1em",
-  },
-});
+const ContentStyle = ({ type }: { type: String }) =>
+  css({
+    backgroundColor: type === "Movie" ? "rgb(22, 23, 26)" : "rgb(42, 43, 46)",
+    padding: "1em",
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "space-around",
+    overflowX: "hidden",
+    overflowY: "auto",
+    span: {
+      fontWeight: "bold",
+      marginRight: "1em",
+    },
+  });
 
 const TitleStyle = css({
   fontSize: "3.5rem",
@@ -168,7 +169,7 @@ const MultimediaModal: React.FC<ModalPrompts> = ({
           <div></div>
           <div></div>
         </div>
-        <div css={ContentStyle} id="modal-content">
+        <div css={ContentStyle({ type: data.type })} id="modal-content">
           <div css={TitleStyle}>
             <h1>{data.title}</h1>
             <div></div>

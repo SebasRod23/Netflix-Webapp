@@ -23,26 +23,6 @@ const chartc = css({
 }
 );
 
-/*let chart = new ApexCharts(document.querySelector("#chart"), {
-    series: [70,30],
-    chart: {
-        width: 500,
-        type: 'pie',
-    },
-    labels: ['Movies', 'Series'],
-    legend: {
-        show: false
-    },
-    responsive: [{
-        breakpoint: 480,
-        options: {
-        chart: {
-            width: 250
-        }
-        }
-    }],
-
-  });*/
 let chart =  new ApexCharts(document.querySelector("#chart"), {
     series: [70,30],
     chart: {
@@ -81,30 +61,9 @@ const Chart: React.FC = () => {
             }
             }
         }],
-      } as {
-        series: number[],
-        chart: {
-            width:number,
-            type: string,
-        },
-        labels: string[],
-        legend: {
-            show: false
-        }
-        responsive: [{
-            breakpoint: number,
-            options: {
-            chart: {
-                width: number
-            }
-            }
-        }],
       });
     useEffect(() => {
-        /*chart.updateOptions({
-            chartConfig
-        });*/
-        //
+
         if(chart){
             chart =  new ApexCharts(document.querySelector("#chart"), chartConfig) 
         }
@@ -115,7 +74,6 @@ const Chart: React.FC = () => {
             series:[90,10],
             labels:["A","B"]
         });
-        //setChartConfig({...chartConfig,series:[90,10,20],labels:["A","B","C"]});
     }
 
     return (
