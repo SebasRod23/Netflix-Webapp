@@ -20,58 +20,75 @@ const data = [
   { title: "12 Angry Men", year: 1957 },
   { title: "Schindler's List", year: 1993 },
 ];
-const inputStyle=css({
-  width:"50%",
-  margin:"2.5%",
-  "div label":{
-    color:"white"
+const inputStyle = css({
+  width: "30%",
+  height: "auto",
+  display: "flex",
+  alignItems: "center",
+  "> div": {
+    position: "absolute",
+    maxWidth: "30%",
+    margin: "0",
   },
-  "div div input":{
-    color:"white"
+  "div label": {
+    color: "#c1c1c1",
   },
-  "div div":{
-    borderBottom:"1px solid white",
-    color:"white"
+  "div div input": {
+    color: "white",
   },
-  "div div div button":{
-    color:"white"
-  }
-
-})
-const selectStyle =css({
-  "&&":{
-    width:"150px",
-    height:"50px",
-    "div":{
-      borderBottom:"1px solid white"
+  "div div": {
+    borderBottom: "1px solid white",
+    color: "white",
+  },
+  "div div div ": {
+    borderBottom: "none",
+  },
+  "div div div button": {
+    color: "rgb(255,255,255,54%)",
+    borderBottom: "none",
+  },
+});
+const selectStyle = css({
+  "&&": {
+    width: "150px",
+    height: "50px",
+    color: "white",
+    margin: 0,
+    "> div": {
+      width: "100%",
     },
-    "label":{color:"white"},
-    "div div":{
-      color:"white"
-    }
+    div: {
+      borderBottom: "1px solid white",
+      color: "white",
+      marginTop: "16px",
+    },
+    svg: {
+      color: "white",
+    },
   },
-  
-})
+});
 const divStyles = css({
-  maxWidth:"100%",
-  display:"flex",
-  justifyContent:"space-between",
-  alignContent:"center",
-  maxHeight:"100px"
-
-})
-const buttonStyle=css({
-  maxHeight:"50px"
-})
-const InputLabelStyles=css({
-  display:"flex",
-  alignItems:"center",
-  maxHeight:"50px",
-  color:"white",
-  "label":{
-    color:"white"
-  }
-})
+  maxWidth: "100%",
+  display: "flex",
+  justifyContent: "space-evenly",
+  alignItems: "center",
+  maxHeight: "100px",
+});
+const buttonStyle = css({
+  maxHeight: "50px",
+  width: "10rem",
+});
+const InputLabelStyles = css({
+  "&&": {
+    display: "flex",
+    alignItems: "center",
+    maxHeight: "50px",
+    color: "white",
+    label: {
+      color: "white",
+    },
+  },
+});
 interface ActiveProps {
   activeComp: string;
   setActiveComp?: React.Dispatch<React.SetStateAction<string>>;
@@ -95,8 +112,10 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({ activeComp }) => {
           <TextField {...params} label="Search info" margin="normal" />
         )}
       />
-      <FormControl >
-        <InputLabel id="options-label"css={InputLabelStyles}>options</InputLabel>
+      <FormControl>
+        <InputLabel id="options-label" css={InputLabelStyles}>
+          options
+        </InputLabel>
         <Select
           css={selectStyle}
           labelId="options-label"
@@ -111,10 +130,16 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({ activeComp }) => {
           ))}
         </Select>
       </FormControl>
-      <Button variant="contained" color="secondary" startIcon={<SearchIcon css={buttonStyle}/>}>
+      <Button
+        variant="contained"
+        color="secondary"
+        startIcon={<SearchIcon />}
+        css={buttonStyle}
+      >
         Search
       </Button>
-      {//<h1>Search Filters</h1>
+      {
+        //<h1>Search Filters</h1>
       }
     </div>
   );
