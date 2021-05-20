@@ -1,7 +1,7 @@
 import React from "react";
 import ListView from "./ListView";
 import SearchFiltersViews from "./SearchFiltersView";
-import StatisticsView from "./StatisticsView.component";
+import StatisticsView from "./StatisticsView";
 
 const data: {
   show_id: string;
