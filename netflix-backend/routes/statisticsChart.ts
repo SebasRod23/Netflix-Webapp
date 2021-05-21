@@ -1,9 +1,9 @@
 import express from 'express';
 import Data from '../models/data.model';
 
-const routerStatistics = express.Router();
+const router = express.Router();
 
-routerStatistics.route('/all').get((req, res) => {
+router.get('/all',(req, res) => {
     interface requestType {
         _id:string,
         count:number
@@ -35,8 +35,7 @@ routerStatistics.route('/all').get((req, res) => {
 
 
 //COUNTRY
-
-routerStatistics.route('/country').get((req, res) => {
+router.get('/country',(req, res) => {
     interface requestType {
         _id:string,
         count:number
@@ -68,7 +67,7 @@ routerStatistics.route('/country').get((req, res) => {
     }).catch((err) => res.status(400).json('Error: ' + err));
 });
 
-routerStatistics.route('/country/:id').get((req, res) => {
+router.get('/country/:id',(req, res) => {
     Data.aggregate([
         { $match: { type:"Movie" } },
         { $match: { country: req.params.id } },
@@ -83,7 +82,7 @@ routerStatistics.route('/country/:id').get((req, res) => {
 
 //YEAR
 
-routerStatistics.route('/year').get((req, res) => {
+router.get('/year',(req, res) => {
     interface requestType {
         _id:string,
         count:number
@@ -114,7 +113,7 @@ routerStatistics.route('/year').get((req, res) => {
     })
       .catch((err) => res.status(400).json('Error: ' + err));
 });
-routerStatistics.route('/year/:id').get((req, res) => {
+router.get('/year/:id',(req, res) => {
     console.log( Number(req.params.id))
     Data.aggregate([
         { $match: { release_year: Number(req.params.id) } },
@@ -128,4 +127,4 @@ routerStatistics.route('/year/:id').get((req, res) => {
     .catch((err) => res.status(400).json('Error: ' + err));
 });
 
-export default routerStatistics;
+export default router;
