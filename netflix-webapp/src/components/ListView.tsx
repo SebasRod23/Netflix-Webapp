@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react';
 /** @jsxImportSource @emotion/react */ import { css } from '@emotion/react';
 import MultimediaModal from './MultimediaModal';
 import axios, { AxiosResponse } from 'axios';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+const ViewStyle = css({
+  padding: '2rem',
+});
 
 const ListStyle = css({
   width: '100%',
@@ -29,10 +34,32 @@ const ELementBox = ({ color }: { color: String }) =>
     textAlign: 'center',
   });
 
-const ButtonStyle = css({
-  backgroundColor: 'red',
+const ButtonDivStyle = css({
+  display: 'flex',
+  width: '45%',
+  margin: 'auto',
+  justifyContent: 'space-around',
   padding: '1rem',
+});
+
+const ButtonStyle = css({
+  '@keyframes appear': {
+    '0%': {
+      opacity: '0',
+    },
+    '100%': {
+      opacity: '100%',
+    },
+  },
+  backgroundColor: '#781c16',
+  padding: '0.75em 1.25em',
   cursor: 'pointer',
+  fontSize: '1.25rem',
+  width: '4em',
+  textAlign: 'center',
+  borderRadius: '10px',
+  fontWeight: 500,
+  animation: '0.25s ease-out 0s 1 appear',
 });
 
 interface IData {
@@ -53,7 +80,7 @@ interface IData {
 const ListView: React.FC = () => {
   const [data, setData] = useState<IData[]>([]);
   const limit = 20;
-  const [pagina, setPagina] = useState(200);
+  const [pagina, setPagina] = useState(0);
 
   const fetchData = async (): Promise<AxiosResponse<any>> => {
     try {
@@ -74,9 +101,11 @@ const ListView: React.FC = () => {
       .then((response) => {
         console.log(response.data);
         setData(response.data);
+        setLoading(false);
       })
       .catch((err: Error) => console.log(err));
   };
+
   useEffect(() => {
     getData();
   }, []);
@@ -103,34 +132,49 @@ const ListView: React.FC = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
   const changePage = (offset: number) => {
     setPagina(pagina + offset);
-    getData();
+    setLoading(true);
   };
+  const [isLoading, setLoading] = useState(true);
+  useEffect(() => {
+    getData();
+  }, [pagina, isLoading]);
 
   return (
-    <div>
+    <div css={ViewStyle}>
       <div css={ListStyle}>
-        {data.map((element) => (
-          <div
-            css={ELementBox({ color: element.type })}
-            onClick={() => handleOpen(element)}
-            key={element.show_id}
-          >
-            <h2>{element.title}</h2>
-          </div>
-        ))}
+        {isLoading ? (
+          <CircularProgress />
+        ) : (
+          data.map((element) => (
+            <div
+              css={ELementBox({ color: element.type })}
+              onClick={() => handleOpen(element)}
+              key={element.show_id}
+            >
+              <h2>{element.title}</h2>
+            </div>
+          ))
+        )}
+
         <MultimediaModal
           data={elementData}
           open={open}
           handleClose={handleClose}
         />
       </div>
-      <div css={ButtonStyle} onClick={() => changePage(1)}>
-        Siguiente
-      </div>
-      <div css={ButtonStyle} onClick={() => changePage(-1)}>
-        Anterior
+      <div css={ButtonDivStyle}>
+        {pagina !== 0 && (
+          <div css={ButtonStyle} onClick={() => changePage(-1)}>
+            Previous
+          </div>
+        )}
+
+        <div css={ButtonStyle} onClick={() => changePage(1)}>
+          Next
+        </div>
       </div>
     </div>
   );
