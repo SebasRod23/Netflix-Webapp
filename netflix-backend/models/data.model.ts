@@ -2,13 +2,13 @@ import mongoose, { Schema, Document } from 'mongoose';
 
 interface IData extends Document {
   show_id: string;
-  type: string;
+  type: 'Movie' | 'TV Show';
   title: string;
   director: string;
   cast: string;
   country: string;
   date_added: string;
-  release_year: Number;
+  release_year: number;
   rating: string;
   duration: string;
   listed_in: string;
@@ -17,7 +17,7 @@ interface IData extends Document {
 
 const dataSchema: Schema = new Schema({
   show_id: { type: String },
-  type: { type: String },
+  type: { type: String, enum: ['Movie', 'TV Show'], default: 'Movie' },
   title: { type: String },
   director: { type: String },
   cast: { type: String },
