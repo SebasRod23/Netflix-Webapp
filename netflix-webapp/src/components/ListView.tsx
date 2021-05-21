@@ -81,6 +81,35 @@ const ListView: React.FC = () => {
   const [data, setData] = useState<IData[]>([]);
   const limit = 20;
   const [pagina, setPagina] = useState(0);
+  const [isLoading, setLoading] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [elementData, setElementData] = useState<IData>({
+    show_id: '',
+    type: 'Movie',
+    title: '',
+    director: '',
+    cast: '',
+    country: '',
+    date_added: '',
+    release_year: 0,
+    rating: '',
+    duration: '',
+    listed_in: '',
+    description: '',
+  });
+
+  const handleOpen = (elementData: IData) => {
+    setOpen(true);
+    setElementData(elementData);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const changePage = (offset: number) => {
+    setPagina(pagina + offset);
+    setLoading(true);
+  };
 
   const fetchData = async (): Promise<AxiosResponse<any>> => {
     try {
@@ -108,45 +137,14 @@ const ListView: React.FC = () => {
 
   useEffect(() => {
     getData();
-  }, []);
-
-  const [open, setOpen] = useState(false);
-  const [elementData, setElementData] = useState<IData>({
-    show_id: '',
-    type: 'Movie',
-    title: '',
-    director: '',
-    cast: '',
-    country: '',
-    date_added: '',
-    release_year: 0,
-    rating: '',
-    duration: '',
-    listed_in: '',
-    description: '',
-  });
-  const handleOpen = (elementData: IData) => {
-    setOpen(true);
-    setElementData(elementData);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const changePage = (offset: number) => {
-    setPagina(pagina + offset);
-    setLoading(true);
-  };
-  const [isLoading, setLoading] = useState(true);
-  useEffect(() => {
-    getData();
-  }, [pagina, isLoading]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pagina]);
 
   return (
     <div css={ViewStyle}>
       <div css={ListStyle}>
         {isLoading ? (
-          <CircularProgress />
+          <CircularProgress color='secondary' />
         ) : (
           data.map((element) => (
             <div
