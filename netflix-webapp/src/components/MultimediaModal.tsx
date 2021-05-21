@@ -1,156 +1,156 @@
-import React from "react";
-/** @jsxImportSource @emotion/react */ import { css } from "@emotion/react";
-import { Modal } from "@material-ui/core";
+import React from 'react';
+/** @jsxImportSource @emotion/react */ import { css } from '@emotion/react';
+import { Modal } from '@material-ui/core';
 
 const ModalStyle = css({
-  "@keyframes appear": {
-    "0%": {
-      opacity: "0%",
+  '@keyframes appear': {
+    '0%': {
+      opacity: '0%',
     },
-    "100%": {
-      opacity: "100%",
+    '100%': {
+      opacity: '100%',
     },
   },
 
-  width: "90%",
-  height: "80vh",
-  margin: "10vh auto",
-  color: "white",
-  animation: "0.25s ease-out 0s 1 appear",
+  width: '90%',
+  height: '80vh',
+  margin: '10vh auto',
+  color: 'white',
+  animation: '0.25s ease-out 0s 1 appear',
 });
 const CloseBttnStyle = css({
-  "@keyframes left": {
-    "0%": {
-      transform: "rotate(0deg)",
-      opacity: "50%",
+  '@keyframes left': {
+    '0%': {
+      transform: 'rotate(0deg)',
+      opacity: '50%',
     },
-    "100%": {
-      transform: "rotate(-45deg)",
-      opacity: "100%",
-    },
-  },
-  "@keyframes right": {
-    "0%": {
-      transform: "rotate(0deg)",
-      opacity: "50%",
-    },
-    "100%": {
-      transform: "rotate(45deg)",
-      opacity: "100%",
+    '100%': {
+      transform: 'rotate(-45deg)',
+      opacity: '100%',
     },
   },
-  width: "30px",
-  height: "30px",
-  cursor: "pointer",
-  float: "right",
-  margin: "1em",
-  position: "absolute",
+  '@keyframes right': {
+    '0%': {
+      transform: 'rotate(0deg)',
+      opacity: '50%',
+    },
+    '100%': {
+      transform: 'rotate(45deg)',
+      opacity: '100%',
+    },
+  },
+  width: '30px',
+  height: '30px',
+  cursor: 'pointer',
+  float: 'right',
+  margin: '1em',
+  position: 'absolute',
 
   div: {
-    height: "4px",
-    width: "30px",
-    marginTop: "12px",
-    backgroundColor: "white",
-    position: "absolute",
+    height: '4px',
+    width: '30px',
+    marginTop: '12px',
+    backgroundColor: 'white',
+    position: 'absolute',
   },
-  "div:first-of-type": {
-    animation: "0.5s ease-out 0s 1 left",
-    transform: "rotate(-45deg)",
+  'div:first-of-type': {
+    animation: '0.5s ease-out 0s 1 left',
+    transform: 'rotate(-45deg)',
   },
-  "div:last-of-type": {
-    animation: "0.5s ease-out 0s 1 right",
-    transform: "rotate(45deg)",
+  'div:last-of-type': {
+    animation: '0.5s ease-out 0s 1 right',
+    transform: 'rotate(45deg)',
   },
 });
 const ContentStyle = ({ type }: { type: String }) =>
   css({
-    backgroundColor: type === "Movie" ? "rgb(22, 23, 26)" : "rgb(42, 43, 46)",
-    padding: "1em",
-    height: "100%",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "space-around",
-    overflowX: "hidden",
-    overflowY: "auto",
+    backgroundColor: type === 'Movie' ? 'rgb(22, 23, 26)' : 'rgb(42, 43, 46)',
+    padding: '1em',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    overflowX: 'hidden',
+    overflowY: 'auto',
     span: {
-      fontWeight: "bold",
-      marginRight: "1em",
+      fontWeight: 'bold',
+      marginRight: '1em',
     },
   });
 
 const TitleStyle = css({
-  fontSize: "3.5rem",
-  textAlign: "center",
-  width: "90%",
+  fontSize: '3.5rem',
+  textAlign: 'center',
+  width: '90%',
   div: {
-    width: "70%",
-    borderBottom: "1px solid white",
-    margin: "5px auto 0",
+    width: '70%',
+    borderBottom: '1px solid white',
+    margin: '5px auto 0',
   },
 });
 const WrapperStyle = css({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-around",
-  width: "90%",
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-around',
+  width: '90%',
 });
 const LeftStyle = css({
-  minWidth: "25%",
-  padding: "0 1em 1em",
-  marginRight: "1em",
+  minWidth: '25%',
+  padding: '0 1em 1em',
+  marginRight: '1em',
   h2: {
-    marginTop: "1em",
+    marginTop: '1em',
   },
 });
 const RightStyle = css({
-  padding: "1em",
-  textAlign: "justify",
+  padding: '1em',
+  textAlign: 'justify',
   p: {
-    marginBottom: "1em",
+    marginBottom: '1em',
   },
   h2: {
-    margin: "1em 0",
+    margin: '1em 0',
   },
   div: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "center",
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
     h3: {
-      margin: "0.5em",
-      padding: "0.5em",
-      backgroundColor: "black",
+      margin: '0.5em',
+      padding: '0.5em',
+      backgroundColor: 'black',
     },
   },
 });
 const TagsStyle = css({
-  textAlign: "center",
+  textAlign: 'center',
   div: {
-    marginTop: "1em",
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "center",
+    marginTop: '1em',
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
     h3: {
-      fontSize: "0.75rem",
-      margin: "0.5em",
-      padding: "0.5em",
-      backgroundColor: "black",
+      fontSize: '0.75rem',
+      margin: '0.5em',
+      padding: '0.5em',
+      backgroundColor: 'black',
     },
   },
 });
 interface ModalPrompts {
   data: {
     show_id: string;
-    type: "Movie" | "TV Show";
+    type: 'Movie' | 'TV Show';
     title: string;
     director: string;
-    cast: string[];
+    cast: string;
     country: string;
     date_added: string;
     release_year: number;
     rating: string;
     duration: string;
-    listed_in: string[];
+    listed_in: string;
     description: string;
   };
   open: boolean;
@@ -169,7 +169,7 @@ const MultimediaModal: React.FC<ModalPrompts> = ({
           <div></div>
           <div></div>
         </div>
-        <div css={ContentStyle({ type: data.type })} id="modal-content">
+        <div css={ContentStyle({ type: data.type })} id='modal-content'>
           <div css={TitleStyle}>
             <h1>{data.title}</h1>
             <div></div>
@@ -177,7 +177,7 @@ const MultimediaModal: React.FC<ModalPrompts> = ({
 
           <div css={WrapperStyle}>
             <div css={LeftStyle}>
-              {data.director !== undefined && data.director !== "" ? (
+              {data.director !== undefined && data.director !== '' ? (
                 <h2>
                   <span>Director:</span> {data.director}
                 </h2>
@@ -187,21 +187,21 @@ const MultimediaModal: React.FC<ModalPrompts> = ({
               <h2>
                 <span>Release year:</span> {data.release_year}
               </h2>
-              {data.country !== undefined && data.country !== "" ? (
+              {data.country !== undefined && data.country !== '' ? (
                 <h2>
                   <span>Country:</span> {data.country}
                 </h2>
               ) : (
                 <h2>Country not available</h2>
               )}
-              {data.rating !== undefined && data.rating !== "" ? (
+              {data.rating !== undefined && data.rating !== '' ? (
                 <h2>
                   <span>Rating:</span> {data.rating}
                 </h2>
               ) : (
                 <h2>Rating not available</h2>
               )}
-              {data.date_added !== undefined && data.date_added !== "" ? (
+              {data.date_added !== undefined && data.date_added !== '' ? (
                 <h2>
                   <span>Available since:</span> {data.date_added}
                 </h2>
@@ -213,7 +213,7 @@ const MultimediaModal: React.FC<ModalPrompts> = ({
               <p>
                 <span>Description:</span> {data.description}
               </p>
-              {data.type === "Movie" ? (
+              {data.type === 'Movie' ? (
                 <h2>
                   <span>Length:</span> {data.duration}
                 </h2>
@@ -225,7 +225,7 @@ const MultimediaModal: React.FC<ModalPrompts> = ({
               <span>Cast:</span>
               {data.cast !== null && data.cast.length > 0 ? (
                 <div>
-                  {data.cast.map((actor) => (
+                  {data.cast.split(', ').map((actor) => (
                     <h3>{actor}</h3>
                   ))}
                 </div>
@@ -238,7 +238,7 @@ const MultimediaModal: React.FC<ModalPrompts> = ({
           <div css={TagsStyle}>
             <span>Tags:</span>
             <div>
-              {data.listed_in.map((tag) => (
+              {data.listed_in.split(', ').map((tag) => (
                 <h3>{tag}</h3>
               ))}
             </div>

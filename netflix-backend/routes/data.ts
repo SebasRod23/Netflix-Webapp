@@ -3,10 +3,12 @@ import Data from '../models/data.model';
 
 const router = express.Router();
 
-router.route('/').get((req, res) => {
-  Data.find()
-    .then((data) => res.json(data))
-    .catch((err) => res.status(400).json('Error: ' + err));
+router.post('/', async (req, res) => {
+  const data = await Data.find({}, null, {
+    skip: Number(req.body.skip),
+    limit: Number(req.body.limit),
+  });
+  res.send(data);
 });
 
 export default router;
