@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import ApexCharts from "apexcharts";
+import React, { useEffect, useState } from 'react';
+import ApexCharts from 'apexcharts';
 import axios, { AxiosResponse } from 'axios';
-/** @jsxImportSource @emotion/react */ import { css } from "@emotion/react";
+/** @jsxImportSource @emotion/react */ import { css } from '@emotion/react';
 
 const chartCss = css({
-    width: "100%",
-    display: "flex",
+    width: '100%',
+    display: 'flex',
     minHeight: '48.7vh',
-    flexDirection:"column",
-    alignContent: "center", 
-    margin:"10px",
+    flexDirection:'column',
+    alignContent: 'center', 
+    margin:'10px',
 
 });
 const chartc = css({
-    alignSelf:"center"
+    alignSelf:'center'
 }
 );
 
@@ -36,7 +36,7 @@ const Chart: React.FC<StatisticsProps> = ({ typeProps }) => {
             console.log(todos)
             let chartTodo:response = await todos.data
             console.log(chartTodo.labels)
-                chart =  new ApexCharts(document.querySelector("#chart"),  {
+                chart =  new ApexCharts(document.querySelector('#chart'),  {
                     series: chartTodo.series,
                     chart: {
                         id: 'mychart',
@@ -68,7 +68,7 @@ const Chart: React.FC<StatisticsProps> = ({ typeProps }) => {
                 'http://localhost:3010/statistics/country',
             );
             let chartTodo:response=await dataCountry.data
-                chart =  new ApexCharts(document.querySelector("#chart"), {
+                chart =  new ApexCharts(document.querySelector('#chart'), {
                     series: [{
                         data: chartTodo.series
                     }],
@@ -116,7 +116,7 @@ const Chart: React.FC<StatisticsProps> = ({ typeProps }) => {
                 'http://localhost:3010/statistics/year',
             );
             let chartTodo:response=await dataYear.data
-                chart =  new ApexCharts(document.querySelector("#chart"), {
+                chart =  new ApexCharts(document.querySelector('#chart'), {
                     series: [{
                         data: chartTodo.series
                     }],
@@ -159,15 +159,15 @@ const Chart: React.FC<StatisticsProps> = ({ typeProps }) => {
     };
     
     useEffect(() => {
-        console.log("entre")
+        console.log('entre')
         const fetchData=()=>{
             if(chart){  
                 chart.destroy();
             }
-            console.log("wiii")
-            if(type==="country"){
+            console.log('wiii')
+            if(type==='country'){
                 getCountry()
-            }else if(type==="year"){
+            }else if(type==='year'){
                 getYear()
             } else{
                 getTodos()
@@ -179,11 +179,11 @@ const Chart: React.FC<StatisticsProps> = ({ typeProps }) => {
 
     return (
         <div css={chartCss}>
-            <div id="chart"  css={chartc}>
+            <div id='chart'  css={chartc}>
             </div>
-            <button onClick={()=>setType("all")}>all</button>
-            <button onClick={()=>setType("country")}>country</button>
-            <button onClick={()=>setType("year")}>year</button>
+            <button onClick={()=>setType('all')}>all</button>
+            <button onClick={()=>setType('country')}>country</button>
+            <button onClick={()=>setType('year')}>year</button>
         </div>
         
     );

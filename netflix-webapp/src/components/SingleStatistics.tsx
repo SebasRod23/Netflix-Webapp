@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import axios, { AxiosResponse } from 'axios';
-/** @jsxImportSource @emotion/react */ import { css } from "@emotion/react";
+/** @jsxImportSource @emotion/react */ import { css } from '@emotion/react';
 
 const chartCss = css({
-    width: "100%",
+    width: '100%',
     minHeight: '48.7vh',
-    display: "flex",
-    flexDirection:"column",
-    alignContent: "center", 
-    justifyContent:"center",
-    margin:"10px",
-    "h2":{
-        alignSelf:"center",
-        marginBottom:"20px"
+    display: 'flex',
+    flexDirection:'column',
+    alignContent: 'center', 
+    justifyContent:'center',
+    margin:'10px',
+    'h2':{
+        alignSelf:'center',
+        marginBottom:'20px'
     },
-    "h3":{
-        alignSelf:"center",
-        margin:"20px",
+    'h3':{
+        alignSelf:'center',
+        margin:'20px',
         color:'#781c16',
         fontWeight: 500,
     }
@@ -57,7 +57,7 @@ const SingleStatistics: React.FC<StatisticsProps> = ({ type,input }) => {
         }
     };
     useEffect(() => {
-        if(type==="country"){
+        if(type==='country'){
             getPerCountry(input)
         }else{
             let yearNum:number=+input
