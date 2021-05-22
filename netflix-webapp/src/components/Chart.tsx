@@ -21,10 +21,11 @@ interface response {
 }
 interface StatisticsProps {
   typeProps: string;
+  routeSearch: string;
 }
 let chart: any = false;
 
-const Chart: React.FC<StatisticsProps> = ({ typeProps }) => {
+const Chart: React.FC<StatisticsProps> = ({ typeProps, routeSearch }) => {
   const [type, setType] = useState(typeProps);
   const getTodos = async (): Promise<AxiosResponse<any>> => {
     try {

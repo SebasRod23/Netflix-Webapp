@@ -23,20 +23,19 @@ const chartCss = css({
 });
 
 interface StatisticsProps{
-    type:string,
-    input:string
+    routeSearch:string
 }
-const SingleStatistics: React.FC<StatisticsProps> = ({ type,input }) => {
-    const [label,setLabel]=useState(type)
-    const [numLabel,setNumLabel]=useState()
+const SingleStatistics: React.FC<StatisticsProps> = ({ routeSearch }) => {
+    const [label,setLabel]=useState('Not found')
+    const [numLabel,setNumLabel]=useState('')
     
-    const getPerCountry= async (country:string): Promise<AxiosResponse<any>> => {
+    const getSingleStats= async (route:string): Promise<AxiosResponse<any>> => {
         try {
             const numCountry: AxiosResponse<any> = await axios.get(
-                'http://localhost:3010/statistics/country/'+country,
+                'http://localhost:3010/'+route,
             );
-            setLabel(country)
-            setNumLabel(numCountry.data)
+            setLabel(numCountry.data.label)
+            setNumLabel(numCountry.data.number)
             console.log(numCountry)
             return numCountry;
         } catch (error) {
@@ -44,26 +43,10 @@ const SingleStatistics: React.FC<StatisticsProps> = ({ type,input }) => {
         }
     };
 
-    const getPerYear= async (yearNum:number): Promise<AxiosResponse<any>> => {
-        try {
-            const year: AxiosResponse<any> = await axios.get(
-                'http://localhost:3010/statistics/year/'+yearNum,
-            );
-            setLabel(yearNum.toString())
-            setNumLabel(year.data)
-            return year;
-        } catch (error) {
-            throw new Error(error);
-        }
-    };
+    
     useEffect(() => {
-        if(type==='country'){
-            getPerCountry(input)
-        }else{
-            let yearNum:number=+input
-            getPerYear(yearNum)
-        } 
-    },[type]);
+        getSingleStats(routeSearch)
+    },[routeSearch]);
 
     return (
         <div css={chartCss}>
