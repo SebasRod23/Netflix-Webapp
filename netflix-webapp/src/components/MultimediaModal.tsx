@@ -226,7 +226,7 @@ const MultimediaModal: React.FC<ModalPrompts> = ({
               {data.cast !== null && data.cast.length > 0 ? (
                 <div>
                   {data.cast.split(', ').map((actor) => (
-                    <h3>{actor}</h3>
+                    <h3 key={actor}>{actor}</h3>
                   ))}
                 </div>
               ) : (
@@ -239,7 +239,7 @@ const MultimediaModal: React.FC<ModalPrompts> = ({
             <span>Tags:</span>
             <div>
               {data.listed_in.split(', ').map((tag) => (
-                <h3>{tag}</h3>
+                <h3 key={tag}>{tag}</h3>
               ))}
             </div>
           </div>
