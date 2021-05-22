@@ -91,7 +91,7 @@ const InputLabelStyles = css({
 });
 interface ActiveProps {
   activeComp: string;
-  setActiveComp?: React.Dispatch<React.SetStateAction<string>>;
+  //setActiveComp?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const SearchFiltersViews: React.FC<ActiveProps> = ({ activeComp }) => {
