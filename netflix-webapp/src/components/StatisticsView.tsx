@@ -16,10 +16,9 @@ const StatisticsStyle = css({
 interface StatisticsProps {
   routeSearch: string;
 }
-//const StatisticsView: React.FC<StatisticsProps> = ({ type,input }) => {
+
 const StatisticsView: React.FC<StatisticsProps> = ({ routeSearch }) => {
   const [input, setInput] = useState('');
-  //let renderedComp = input === '' ? <Chart typeProps={type}/> : <SingleStatistics input={input} type={type}/>;
   let renderedComp =
     routeSearch.split('/').length === 2 ? (
       <Chart routeSearch={routeSearch} />

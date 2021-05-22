@@ -20,17 +20,16 @@ interface response {
   labels: any[];
 }
 interface StatisticsProps {
-  typeProps: string;
   routeSearch: string;
 }
 let chart: any = false;
 
-const Chart: React.FC<StatisticsProps> = ({ typeProps, routeSearch }) => {
-  const [type, setType] = useState(typeProps);
+const Chart: React.FC<StatisticsProps> = ({ routeSearch }) => {
+  const [type, setType] = useState(routeSearch);
   const getTodos = async (): Promise<AxiosResponse<any>> => {
     try {
       const todos: AxiosResponse<any> = await axios.get(
-        'http://localhost:3010/statistics/all',
+        'http://localhost:3010/statistics/',
       );
       console.log(todos);
       let chartTodo: response = await todos.data;
@@ -166,15 +165,13 @@ const Chart: React.FC<StatisticsProps> = ({ typeProps, routeSearch }) => {
   };
 
   useEffect(() => {
-    console.log('entre');
     const fetchData = () => {
       if (chart) {
         chart.destroy();
       }
-      console.log('wiii');
-      if (type === 'country') {
+      if (type === 'country/') {
         getCountry();
-      } else if (type === 'year') {
+      } else if (type === 'year/') {
         getYear();
       } else {
         getTodos();

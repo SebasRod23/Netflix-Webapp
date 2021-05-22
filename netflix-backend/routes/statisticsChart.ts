@@ -3,7 +3,7 @@ import Data from '../models/data.model';
 
 const router = express.Router();
 
-router.get('/all', (req, res) => {
+router.get('/', (req, res) => {
   interface requestType {
     _id: string;
     count: number;

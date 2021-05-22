@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 /** @jsxImportSource @emotion/react */ import { css } from '@emotion/react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import SearchIcon from '@material-ui/icons/Search';
@@ -91,16 +91,29 @@ const InputLabelStyles = css({
 });
 interface ActiveProps {
   activeComp: string;
-  //setActiveComp?: React.Dispatch<React.SetStateAction<string>>;
+  routeSearch: string;
+  setRouteSearch: (route: string) => void;
 }
 
-const SearchFiltersViews: React.FC<ActiveProps> = ({ activeComp }) => {
+const SearchFiltersViews: React.FC<ActiveProps> = ({
+  activeComp,
+  routeSearch,
+  setRouteSearch,
+}) => {
   const [filterOptions, setFilterOptions] = React.useState('General');
+
+  const [input, setInput] = useState('');
   const handleChangeSelect = (event: React.ChangeEvent<{ value: unknown }>) => {
     setFilterOptions(event.target.value as string);
+    activeComp !== 'search' && setRouteSearch(filterOptions.toLowerCase());
+  };
+  const handleOnClick = () => {
+    let route: string = filterOptions.toLowerCase() + '/' + input;
+    console.log(route);
+    setRouteSearch(route);
   };
   const searchOptions = ['Movie', 'Actor', 'TvShow'];
-  const statisticsOptions = ['General', 'Country', 'Release'];
+  const statisticsOptions = ['General', 'Country', 'Year'];
   let listOptions = activeComp === 'search' ? searchOptions : statisticsOptions;
   useEffect(() => {
     setFilterOptions(activeComp === 'search' ? 'Movie' : 'General');
@@ -111,6 +124,7 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({ activeComp }) => {
         <Autocomplete
           css={inputStyle}
           id='search-bar'
+          onChange={(event, value) => setInput(value !== null ? value : '')}
           options={data.map((data) => data.title)}
           renderInput={(params) => (
             <TextField {...params} label='Search info' margin='normal' />
@@ -141,6 +155,7 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({ activeComp }) => {
         color='secondary'
         startIcon={<SearchIcon />}
         css={buttonStyle}
+        onClick={() => handleOnClick()}
       >
         Search
       </Button>
