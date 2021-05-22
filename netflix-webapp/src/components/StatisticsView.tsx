@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import Chart from "./Chart";
-import SingleStatistics from "./SingleStatistics";
-/** @jsxImportSource @emotion/react */ import { css } from "@emotion/react";
+import React, { useState } from 'react';
+import Chart from './Chart';
+import SingleStatistics from './SingleStatistics';
+/** @jsxImportSource @emotion/react */ import { css } from '@emotion/react';
 
 const StatisticsStyle = css({
-  padding: "1em",
-  fontSize: "2rem",
-  display: "flex",
-  flexDirection: "column",
-  "h1":{
-    fontSize: "3rem",
-    alignSelf:"center"
+  padding: '1em',
+  fontSize: '2rem',
+  display: 'flex',
+  flexDirection: 'column',
+  'h1':{
+    fontSize: '3rem',
+    alignSelf:'center'
 }
 });
 interface StatisticsProps{
