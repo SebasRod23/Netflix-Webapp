@@ -11,8 +11,6 @@ import {
   MenuItem,
   Button,
 } from '@material-ui/core';
-import SelectInput from '@material-ui/core/Select/SelectInput';
-
 
 const inputStyle = css({
   width: '30%',
@@ -91,59 +89,62 @@ interface ActiveProps {
 
 const SearchFiltersViews: React.FC<ActiveProps> = ({
   activeComp,
-  routeSearch,
   setRouteSearch,
 }) => {
   const [filterOptions, setFilterOptions] = React.useState('General');
   const [input, setInput] = useState('');
   const searchOptions = ['Movie', 'Actor', 'TvShow'];
   const statisticsOptions = ['General', 'Country', 'Year'];
-  const [data,setData]=useState([])
-  const handleChangeSelect = async(event: React.ChangeEvent<{ value: unknown }>) => {
-    event.preventDefault()
+  const [data, setData] = useState([]);
+  const handleChangeSelect = async (
+    event: React.ChangeEvent<{ value: unknown }>,
+  ) => {
+    event.preventDefault();
     setFilterOptions(event.target.value as string);
     setInput('');
   };
-  const handleOnClick =() => {
-    let route: string = filterOptions.toLowerCase() +  input;
+  const handleOnClick = () => {
+    let route: string = filterOptions.toLowerCase() + input;
     setRouteSearch(route);
-    console.log(routeSearch)
   };
-  
+
   let listOptions = activeComp === 'search' ? searchOptions : statisticsOptions;
   useEffect(() => {
     setFilterOptions(activeComp === 'search' ? 'Movie' : 'General');
   }, [activeComp]);
 
   useEffect(() => {
-    const getSingleStats = async() =>{
+    const getSingleStats = async () => {
       try {
         const options: AxiosResponse<any> = await axios.get(
-          'http://localhost:3010/statistics/' + filterOptions.toLowerCase()+'List',
+          'http://localhost:3010/statistics/' +
+            filterOptions.toLowerCase() +
+            'List',
         );
-        setData(options.data)
-      return options;
+        setData(options.data);
+        return options;
       } catch (error) {
         throw new Error(error);
       }
     };
-    if(activeComp !== 'search' ){
-      console.log(filterOptions.toLowerCase())
-      setRouteSearch(filterOptions.toLowerCase())
-      if(filterOptions==='Country' || filterOptions==='Year'){
-        getSingleStats()
+    if (activeComp !== 'search') {
+      setRouteSearch(filterOptions.toLowerCase());
+      if (filterOptions === 'Country' || filterOptions === 'Year') {
+        getSingleStats();
       }
     }
   }, [activeComp, filterOptions, setRouteSearch]);
 
-  
   return (
     <div css={divStyles}>
       {filterOptions !== 'General' && (
         <Autocomplete
           css={inputStyle}
           id='search-bar'
-          onChange={(event, value) => setInput(value !== null ? '/'+value: '')}
+          onBlur={() => console.log('Sth')}
+          onChange={(event, value) =>
+            setInput(value !== null ? '/' + value : '')
+          }
           options={data.map((data) => data)}
           renderInput={(params) => (
             <TextField {...params} label='Search info' margin='normal' />
@@ -169,15 +170,17 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
           ))}
         </Select>
       </FormControl>
-      <Button
-        variant='contained'
-        color='secondary'
-        startIcon={<SearchIcon />}
-        css={buttonStyle}
-        onClick={() => handleOnClick()}
-      >
-        Search
-      </Button>
+      {filterOptions !== 'General' && (
+        <Button
+          variant='contained'
+          color='secondary'
+          startIcon={<SearchIcon />}
+          css={buttonStyle}
+          onClick={() => handleOnClick()}
+        >
+          Search
+        </Button>
+      )}
     </div>
   );
 };

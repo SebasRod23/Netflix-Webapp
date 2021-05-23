@@ -35,7 +35,7 @@ router.get('/general', (req, res) => {
     .catch((err) => res.status(400).json('Error: ' + err));
 });
 
-//COUNTRY
+//COUNTRY ROUTES*******************************************************************
 router.get('/country', (req, res) => {
   interface requestType {
     _id: string;
@@ -71,10 +71,7 @@ router.get('/country', (req, res) => {
 
 router.get('/country/:id', (req, res) => {
   let countryName = req.params.id;
-  interface requestType {
-    label: number;
-    number: string;
-  }
+
   Data.aggregate([
     { $match: { type: 'Movie' } },
     { $match: { country: countryName } },
@@ -90,8 +87,29 @@ router.get('/country/:id', (req, res) => {
     })
     .catch((err) => res.status(400).json('Error: ' + err));
 });
-
-//YEAR
+router.get('/countryList', (req, res) => {
+  interface requestType {
+    _id: string;
+    count: number;
+  }
+  Data.aggregate([
+    { $match: { type: 'Movie' } },
+    {
+      $group: {
+        _id: '$country',
+      },
+    },
+  ])
+    .then((data) => {
+      let labels: string[] = [];
+      data.map((d: requestType) => {
+        labels.push(d._id);
+      });
+      res.json(labels);
+    })
+    .catch((err) => res.status(400).json('Error: ' + err));
+});
+//YEAR ROUTES*******************************************************************
 
 router.get('/year', (req, res) => {
   interface requestType {
@@ -125,10 +143,6 @@ router.get('/year', (req, res) => {
 });
 router.get('/year/:id', (req, res) => {
   let yearName = req.params.id;
-  interface requestType {
-    label: number;
-    number: string;
-  }
   Data.aggregate([
     { $match: { release_year: Number(req.params.id) } },
     { $match: { type: 'TV Show' } },
@@ -162,28 +176,6 @@ router.get('/yearList', (req, res) => {
       let labels: string[] = [];
       data.map((d: requestType) => {
         labels.push(d._id.toString());
-      });
-      res.json(labels);
-    })
-    .catch((err) => res.status(400).json('Error: ' + err));
-});
-router.get('/countryList', (req, res) => {
-  interface requestType {
-    _id: string;
-    count: number;
-  }
-  Data.aggregate([
-    { $match: { type: 'Movie' } },
-    {
-      $group: {
-        _id: '$country',
-      },
-    }
-  ])
-    .then((data) => {
-      let labels: string[] = [];
-      data.map((d: requestType) => {
-        labels.push(d._id);
       });
       res.json(labels);
     })

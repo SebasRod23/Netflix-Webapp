@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import ApexCharts from 'apexcharts';
 import axios, { AxiosResponse } from 'axios';
 /** @jsxImportSource @emotion/react */ import { css } from '@emotion/react';
@@ -6,7 +6,7 @@ import axios, { AxiosResponse } from 'axios';
 const chartCss = css({
   width: '100%',
   display: 'flex',
-  minHeight: '57vh',
+  minHeight: '54vh',
   flexDirection: 'column',
   alignContent: 'center',
   margin: '10px',
@@ -15,31 +15,30 @@ const chartc = css({
   alignSelf: 'center',
 });
 
-interface response {
-  series: number[];
-  labels: any[];
-}
 interface StatisticsProps {
   routeSearch: string;
 }
 let chart: any = false;
 
 const Chart: React.FC<StatisticsProps> = ({ routeSearch }) => {
-  const [finalRoute,setFinalRoute]=useState('general');
-  const [info,setInfo]=useState({series:['1'],labels:['Select something']});
+  const [finalRoute, setFinalRoute] = useState('general');
+  const [info, setInfo] = useState({
+    series: [],
+    labels: [],
+  });
   useEffect(() => {
-    if(routeSearch!=='country' && routeSearch!=='year'){
+    if (routeSearch !== 'country' && routeSearch !== 'year') {
       setFinalRoute('general');
-    }else{
-      setFinalRoute(routeSearch)
+    } else {
+      setFinalRoute(routeSearch);
     }
-  },[routeSearch]);
-  useEffect(()=>{
+  }, [routeSearch]);
+
+  useEffect(() => {
     const getData = async (): Promise<AxiosResponse<any>> => {
-      console.log(finalRoute)
       try {
         const todos: AxiosResponse<any> = await axios.get(
-          'http://localhost:3010/statistics/'+finalRoute,
+          'http://localhost:3010/statistics/' + finalRoute,
         );
         setInfo(todos.data);
         return todos;
@@ -48,19 +47,18 @@ const Chart: React.FC<StatisticsProps> = ({ routeSearch }) => {
       }
     };
     getData();
-  },[finalRoute])
-  useEffect(()=>{
-    const fetchData = async() => {
-      //let info=getData();
-      if(chart){
+  }, [finalRoute]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (chart) {
         await chart.destroy();
       }
-      console.log(info)
       if (finalRoute === 'country') {
         chart = new ApexCharts(document.querySelector('#chart'), {
           series: [
             {
-              data: info.series
+              data: info.series,
             },
           ],
           chart: {
@@ -81,7 +79,7 @@ const Chart: React.FC<StatisticsProps> = ({ routeSearch }) => {
             show: false,
           },
           xaxis: {
-            categories: info.labels
+            categories: info.labels,
           },
           tooltip: {
             theme: 'dark',
@@ -95,7 +93,6 @@ const Chart: React.FC<StatisticsProps> = ({ routeSearch }) => {
           },
         });
       } else if (finalRoute === 'year') {
-        console.log("yeaaaaar")
         chart = new ApexCharts(document.querySelector('#chart'), {
           series: [
             {
@@ -120,7 +117,7 @@ const Chart: React.FC<StatisticsProps> = ({ routeSearch }) => {
             show: false,
           },
           xaxis: {
-            categories: info.labels
+            categories: info.labels,
           },
           tooltip: {
             theme: 'dark',
@@ -160,7 +157,7 @@ const Chart: React.FC<StatisticsProps> = ({ routeSearch }) => {
       await chart.render();
     };
     fetchData();
-  },[info])
+  }, [info]);
   return (
     <div css={chartCss}>
       <div id='chart' css={chartc}></div>
