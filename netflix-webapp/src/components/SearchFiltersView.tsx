@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 /** @jsxImportSource @emotion/react */ import { css } from '@emotion/react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import axios, { AxiosResponse } from 'axios';
 import SearchIcon from '@material-ui/icons/Search';
 import {
   TextField,
@@ -12,14 +13,7 @@ import {
 } from '@material-ui/core';
 import SelectInput from '@material-ui/core/Select/SelectInput';
 
-const data = [
-  { title: 'The Shawshank Redemption', year: 1994 },
-  { title: 'The Godfather', year: 1972 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Dark Knight', year: 2008 },
-  { title: '12 Angry Men', year: 1957 },
-  { title: "Schindler's List", year: 1993 },
-];
+
 const inputStyle = css({
   width: '30%',
   height: 'auto',
@@ -101,31 +95,56 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
   setRouteSearch,
 }) => {
   const [filterOptions, setFilterOptions] = React.useState('General');
-
   const [input, setInput] = useState('');
-  const handleChangeSelect = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setFilterOptions(event.target.value as string);
-    activeComp !== 'search' && setRouteSearch(filterOptions.toLowerCase());
-  };
-  const handleOnClick = () => {
-    let route: string = filterOptions.toLowerCase() + '/' + input;
-    console.log(route);
-    setRouteSearch(route);
-  };
   const searchOptions = ['Movie', 'Actor', 'TvShow'];
   const statisticsOptions = ['General', 'Country', 'Year'];
+  const [data,setData]=useState([])
+  const handleChangeSelect = async(event: React.ChangeEvent<{ value: unknown }>) => {
+    event.preventDefault()
+    setFilterOptions(event.target.value as string);
+    setInput('');
+  };
+  const handleOnClick =() => {
+    let route: string = filterOptions.toLowerCase() +  input;
+    setRouteSearch(route);
+    console.log(routeSearch)
+  };
+  
   let listOptions = activeComp === 'search' ? searchOptions : statisticsOptions;
   useEffect(() => {
     setFilterOptions(activeComp === 'search' ? 'Movie' : 'General');
   }, [activeComp]);
+
+  useEffect(() => {
+    const getSingleStats = async() =>{
+      try {
+        const options: AxiosResponse<any> = await axios.get(
+          'http://localhost:3010/statistics/' + filterOptions.toLowerCase()+'List',
+        );
+        setData(options.data)
+      return options;
+      } catch (error) {
+        throw new Error(error);
+      }
+    };
+    if(activeComp !== 'search' ){
+      console.log(filterOptions.toLowerCase())
+      setRouteSearch(filterOptions.toLowerCase())
+      if(filterOptions==='Country' || filterOptions==='Year'){
+        getSingleStats()
+      }
+    }
+  }, [activeComp, filterOptions, setRouteSearch]);
+
+  
   return (
     <div css={divStyles}>
       {filterOptions !== 'General' && (
         <Autocomplete
           css={inputStyle}
           id='search-bar'
-          onChange={(event, value) => setInput(value !== null ? value : '')}
-          options={data.map((data) => data.title)}
+          onChange={(event, value) => setInput(value !== null ? '/'+value: '')}
+          options={data.map((data) => data)}
           renderInput={(params) => (
             <TextField {...params} label='Search info' margin='normal' />
           )}

@@ -4,7 +4,7 @@ import axios, { AxiosResponse } from 'axios';
 
 const chartCss = css({
   width: '100%',
-  minHeight: '48.7vh',
+  minHeight: '57vh',
   display: 'flex',
   flexDirection: 'column',
   alignContent: 'center',
@@ -42,10 +42,11 @@ const SingleStatistics: React.FC<StatisticsProps> = ({ routeSearch }) => {
       throw new Error(error);
     }
   };
-
   useEffect(() => {
+    setLabel('Not found');
+    setNumLabel('');
     getSingleStats(routeSearch);
-  }, []);
+  }, [routeSearch]);
 
   return (
     <div css={chartCss}>

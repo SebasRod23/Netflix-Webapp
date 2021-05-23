@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Chart from './Chart';
 import SingleStatistics from './SingleStatistics';
 /** @jsxImportSource @emotion/react */ import { css } from '@emotion/react';
@@ -18,16 +18,16 @@ interface StatisticsProps {
 }
 
 const StatisticsView: React.FC<StatisticsProps> = ({ routeSearch }) => {
-  const [input, setInput] = useState('');
+  
   let renderedComp =
-    routeSearch.split('/').length === 2 ? (
+    routeSearch.split('/').length === 1 ? (
       <Chart routeSearch={routeSearch} />
     ) : (
       <SingleStatistics routeSearch={routeSearch} />
     );
   return (
     <div css={StatisticsStyle}>
-      <h1>Statistics</h1>
+      <h1>Statistics {routeSearch.split('/')[0]}</h1>
       {renderedComp}
     </div>
   );
