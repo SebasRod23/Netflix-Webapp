@@ -14,9 +14,7 @@ const App: React.FC = () => (
 );
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+    <App />,
   document.getElementById("root")
 );
 

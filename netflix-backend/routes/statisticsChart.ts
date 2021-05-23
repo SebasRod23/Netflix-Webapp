@@ -3,7 +3,7 @@ import Data from '../models/data.model';
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
+router.get('/general', (req, res) => {
   interface requestType {
     _id: string;
     count: number;
@@ -129,7 +129,6 @@ router.get('/year/:id', (req, res) => {
     label: number;
     number: string;
   }
-  console.log(Number(req.params.id));
   Data.aggregate([
     { $match: { release_year: Number(req.params.id) } },
     { $match: { type: 'TV Show' } },
@@ -142,6 +141,51 @@ router.get('/year/:id', (req, res) => {
         number: seriesYear,
       };
       res.json(response);
+    })
+    .catch((err) => res.status(400).json('Error: ' + err));
+});
+
+router.get('/yearList', (req, res) => {
+  interface requestType {
+    _id: string;
+  }
+  Data.aggregate([
+    { $match: { type: 'TV Show' } },
+    {
+      $group: {
+        _id: '$release_year',
+      },
+    },
+    { $sort: { _id: 1 } },
+  ])
+    .then((data) => {
+      let labels: string[] = [];
+      data.map((d: requestType) => {
+        labels.push(d._id.toString());
+      });
+      res.json(labels);
+    })
+    .catch((err) => res.status(400).json('Error: ' + err));
+});
+router.get('/countryList', (req, res) => {
+  interface requestType {
+    _id: string;
+    count: number;
+  }
+  Data.aggregate([
+    { $match: { type: 'Movie' } },
+    {
+      $group: {
+        _id: '$country',
+      },
+    }
+  ])
+    .then((data) => {
+      let labels: string[] = [];
+      data.map((d: requestType) => {
+        labels.push(d._id);
+      });
+      res.json(labels);
     })
     .catch((err) => res.status(400).json('Error: ' + err));
 });
