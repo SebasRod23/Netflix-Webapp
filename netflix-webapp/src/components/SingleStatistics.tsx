@@ -4,12 +4,19 @@ import axios, { AxiosResponse } from 'axios';
 
 const chartCss = css({
   width: '100%',
-  minHeight: '57vh',
+  minHeight: '55vh',
   display: 'flex',
   flexDirection: 'column',
   alignContent: 'center',
   justifyContent: 'center',
   margin: '10px',
+  div: {
+    width: '40%',
+    margin: 'auto',
+    backgroundColor: '#2a3333',
+    padding: '1em',
+    textAlign: 'center',
+  },
   h2: {
     alignSelf: 'center',
     marginBottom: '20px',
@@ -36,7 +43,6 @@ const SingleStatistics: React.FC<StatisticsProps> = ({ routeSearch }) => {
       );
       setLabel(numCountry.data.label);
       setNumLabel(numCountry.data.number);
-      console.log(numCountry);
       return numCountry;
     } catch (error) {
       throw new Error(error);
@@ -50,8 +56,10 @@ const SingleStatistics: React.FC<StatisticsProps> = ({ routeSearch }) => {
 
   return (
     <div css={chartCss}>
-      <h2>{label}</h2>
-      <h3>{numLabel}</h3>
+      <div>
+        <h2>{label}</h2>
+        <h3>{numLabel}</h3>
+      </div>
     </div>
   );
 };

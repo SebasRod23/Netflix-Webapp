@@ -128,7 +128,6 @@ const ListView: React.FC = () => {
   const getData = () => {
     fetchData()
       .then((response) => {
-        console.log(response.data);
         setData(response.data);
         setLoading(false);
       })
