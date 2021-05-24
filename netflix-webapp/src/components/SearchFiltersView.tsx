@@ -143,6 +143,15 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
       if (filterOptions === "Country" || filterOptions === "Year") {
         getSingleStats();
       }
+    } else {
+      setRouteSearch(filterOptions.toLowerCase());
+      if (
+        filterOptions === "Movie" ||
+        filterOptions === "Actor" ||
+        filterOptions === "TvShow"
+      ) {
+        getSearchInfo();
+      }
     }
   }, [activeComp, filterOptions, setRouteSearch]);
 

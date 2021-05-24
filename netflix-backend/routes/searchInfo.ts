@@ -1,9 +1,10 @@
 import express from "express";
+import { Db } from "mongodb";
 import Data from "../models/data.model";
 
-const router = express.Router();
+const searchInfoRouter = express.Router();
 
-router.get("/movieList", (req, res) => {
+searchInfoRouter.get("/movieList", (req, res) => {
   interface requestType {
     _id: string;
   }
@@ -26,29 +27,31 @@ router.get("/movieList", (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-// router.get("/actorList", (req, res) => {
-//   interface requestType {
-//     _id: string;
-//   }
-//   Data.aggregate([
-//     {
-//       $group: {
-//         _id: "$release_year",
-//       },
-//     },
-//     { $sort: { _id: 1 } },
-//   ])
-//     .then((data) => {
-//       let labels: string[] = [];
-//       data.map((d: requestType) => {
-//         labels.push(d._id.toString());
-//       });
-//       res.json(labels);
-//     })
-//     .catch((err) => res.status(400).json("Error: " + err));
-// });
+searchInfoRouter.get("/actorList", (req, res) => {
+  interface requestType {
+    _id: string;
+  }
+  Data.aggregate([
+    { $project: { actor: { $split: ["$cast", ", "] }, qty: 1 } },
+    { $unwind: "$actor" },
+    {
+      $group: {
+        _id: "$actor",
+      },
+    },
+  ])
 
-router.get("/tvshowList", (req, res) => {
+    .then((data) => {
+      let labels: string[] = [];
+      data.map((d: requestType) => {
+        labels.push(d._id.toString());
+      });
+      res.json(labels);
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
+searchInfoRouter.get("/tvshowList", (req, res) => {
   interface requestType {
     _id: string;
   }
@@ -70,3 +73,5 @@ router.get("/tvshowList", (req, res) => {
     })
     .catch((err) => res.status(400).json("Error: " + err));
 });
+
+export default searchInfoRouter;
