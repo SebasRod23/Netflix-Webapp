@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import ListView from './ListView';
-import SearchFiltersViews from './SearchFiltersView';
-import StatisticsView from './StatisticsView';
+import React, { useState } from "react";
+import ListView from "./ListView";
+import SearchFiltersViews from "./SearchFiltersView";
+import StatisticsView from "./StatisticsView";
 
 interface ActiveProps {
   activeComp: string;
@@ -9,9 +9,9 @@ interface ActiveProps {
 }
 
 const MainComponent: React.FC<ActiveProps> = ({ activeComp }) => {
-  const [routeSearch, setRouteSearch] = useState('');
+  const [routeSearch, setRouteSearch] = useState("");
   let renderedComp =
-    activeComp === 'search' ? (
+    activeComp === "search" ? (
       <ListView />
     ) : (
       <StatisticsView routeSearch={routeSearch} />
