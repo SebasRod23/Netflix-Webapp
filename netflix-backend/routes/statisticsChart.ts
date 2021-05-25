@@ -1,9 +1,9 @@
-import express from "express";
-import Data from "../models/data.model";
+import express from 'express';
+import Data from '../models/data.model';
 
 const router = express.Router();
 
-router.get("/general", (req, res) => {
+router.get('/general', (req, res) => {
   interface requestType {
     _id: string;
     count: number;
@@ -11,7 +11,7 @@ router.get("/general", (req, res) => {
   Data.aggregate([
     {
       $group: {
-        _id: "$type",
+        _id: '$type',
         count: { $sum: 1 },
       },
     },
@@ -27,26 +27,26 @@ router.get("/general", (req, res) => {
         series,
         labels,
         chart: {
-          type: "pie",
+          type: 'pie',
         },
       };
       res.json(response);
     })
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(400).json('Error: ' + err));
 });
 
 //COUNTRY ROUTES*******************************************************************
-router.get("/country", (req, res) => {
+router.get('/country', (req, res) => {
   interface requestType {
     _id: string;
     count: number;
   }
   Data.aggregate([
-    { $match: { type: "Movie" } },
-    { $match: { country: { $ne: "" } } },
+    { $match: { type: 'Movie' } },
+    { $match: { country: { $ne: '' } } },
     {
       $group: {
-        _id: "$country",
+        _id: '$country',
         count: { $sum: 1 },
       },
     },
@@ -66,16 +66,16 @@ router.get("/country", (req, res) => {
       };
       res.json(response);
     })
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(400).json('Error: ' + err));
 });
 
-router.get("/country/:id", (req, res) => {
+router.get('/country/:id', (req, res) => {
   let countryName = req.params.id;
 
   Data.aggregate([
-    { $match: { type: "Movie" } },
+    { $match: { type: 'Movie' } },
     { $match: { country: countryName } },
-    { $count: "country" },
+    { $count: 'country' },
   ])
     .then((data) => {
       let moviePerCountry = data[0].country;
@@ -85,18 +85,18 @@ router.get("/country/:id", (req, res) => {
       };
       res.json(response);
     })
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(400).json('Error: ' + err));
 });
-router.get("/countryList", (req, res) => {
+router.get('/countryList', (req, res) => {
   interface requestType {
     _id: string;
     count: number;
   }
   Data.aggregate([
-    { $match: { type: "Movie" } },
+    { $match: { type: 'Movie' } },
     {
       $group: {
-        _id: "$country",
+        _id: '$country',
       },
     },
   ])
@@ -107,20 +107,20 @@ router.get("/countryList", (req, res) => {
       });
       res.json(labels);
     })
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(400).json('Error: ' + err));
 });
 //YEAR ROUTES*******************************************************************
 
-router.get("/year", (req, res) => {
+router.get('/year', (req, res) => {
   interface requestType {
     _id: string;
     count: number;
   }
   Data.aggregate([
-    { $match: { type: "TV Show" } },
+    { $match: { type: 'TV Show' } },
     {
       $group: {
-        _id: "$release_year",
+        _id: '$release_year',
         count: { $sum: 1 },
       },
     },
@@ -139,14 +139,14 @@ router.get("/year", (req, res) => {
       };
       res.json(response);
     })
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(400).json('Error: ' + err));
 });
-router.get("/year/:id", (req, res) => {
+router.get('/year/:id', (req, res) => {
   let yearName = req.params.id;
   Data.aggregate([
     { $match: { release_year: Number(req.params.id) } },
-    { $match: { type: "TV Show" } },
-    { $count: "release_year" },
+    { $match: { type: 'TV Show' } },
+    { $count: 'release_year' },
   ])
     .then((data) => {
       let seriesYear = data[0].release_year;
@@ -156,18 +156,18 @@ router.get("/year/:id", (req, res) => {
       };
       res.json(response);
     })
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(400).json('Error: ' + err));
 });
 
-router.get("/yearList", (req, res) => {
+router.get('/yearList', (req, res) => {
   interface requestType {
     _id: string;
   }
   Data.aggregate([
-    { $match: { type: "TV Show" } },
+    { $match: { type: 'TV Show' } },
     {
       $group: {
-        _id: "$release_year",
+        _id: '$release_year',
       },
     },
     { $sort: { _id: 1 } },
@@ -179,7 +179,7 @@ router.get("/yearList", (req, res) => {
       });
       res.json(labels);
     })
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(400).json('Error: ' + err));
 });
 
 export default router;

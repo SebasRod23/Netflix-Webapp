@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-/** @jsxImportSource @emotion/react */ import { css } from "@emotion/react";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import axios, { AxiosResponse } from "axios";
-import SearchIcon from "@material-ui/icons/Search";
+import React, { useEffect, useState } from 'react';
+/** @jsxImportSource @emotion/react */ import { css } from '@emotion/react';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import axios, { AxiosResponse } from 'axios';
+import SearchIcon from '@material-ui/icons/Search';
 import {
   TextField,
   Select,
@@ -10,74 +10,74 @@ import {
   InputLabel,
   MenuItem,
   Button,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
 const inputStyle = css({
-  width: "30%",
-  height: "auto",
-  display: "flex",
-  alignItems: "center",
-  "> div": {
-    position: "absolute",
-    maxWidth: "30%",
-    margin: "0",
+  width: '30%',
+  height: 'auto',
+  display: 'flex',
+  alignItems: 'center',
+  '> div': {
+    position: 'absolute',
+    maxWidth: '30%',
+    margin: '0',
   },
-  "div label": {
-    color: "#c1c1c1",
+  'div label': {
+    color: '#c1c1c1',
   },
-  "div div input": {
-    color: "white",
+  'div div input': {
+    color: 'white',
   },
-  "div div": {
-    borderBottom: "1px solid white",
-    color: "white",
+  'div div': {
+    borderBottom: '1px solid white',
+    color: 'white',
   },
-  "div div div ": {
-    borderBottom: "none",
+  'div div div ': {
+    borderBottom: 'none',
   },
-  "div div div button": {
-    color: "rgb(255,255,255,54%)",
-    borderBottom: "none",
+  'div div div button': {
+    color: 'rgb(255,255,255,54%)',
+    borderBottom: 'none',
   },
 });
 const selectStyle = css({
-  "&&": {
-    width: "150px",
-    height: "50px",
-    color: "white",
+  '&&': {
+    width: '150px',
+    height: '50px',
+    color: 'white',
     margin: 0,
-    "> div": {
-      width: "100%",
+    '> div': {
+      width: '100%',
     },
     div: {
-      borderBottom: "1px solid white",
-      color: "white",
-      marginTop: "16px",
+      borderBottom: '1px solid white',
+      color: 'white',
+      marginTop: '16px',
     },
     svg: {
-      color: "white",
+      color: 'white',
     },
   },
 });
 const divStyles = css({
-  maxWidth: "100%",
-  display: "flex",
-  justifyContent: "space-evenly",
-  alignItems: "center",
-  maxHeight: "100px",
+  maxWidth: '100%',
+  display: 'flex',
+  justifyContent: 'space-evenly',
+  alignItems: 'center',
+  maxHeight: '100px',
 });
 const buttonStyle = css({
-  maxHeight: "50px",
-  width: "10rem",
+  maxHeight: '50px',
+  width: '10rem',
 });
 const InputLabelStyles = css({
-  "&&": {
-    display: "flex",
-    alignItems: "center",
-    maxHeight: "50px",
-    color: "white",
+  '&&': {
+    display: 'flex',
+    alignItems: 'center',
+    maxHeight: '50px',
+    color: 'white',
     label: {
-      color: "white",
+      color: 'white',
     },
   },
 });
@@ -91,64 +91,51 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
   activeComp,
   setRouteSearch,
 }) => {
-  const [filterOptions, setFilterOptions] = React.useState("General");
-  const [input, setInput] = useState("");
-  const searchOptions = ["Movie", "Actor", "TvShow"];
-  const statisticsOptions = ["General", "Country", "Year"];
+  const [filterOptions, setFilterOptions] = React.useState('General');
+  const [input, setInput] = useState('');
+  const searchOptions = ['Movie', 'Actor', 'TvShow'];
+  const statisticsOptions = ['General', 'Country', 'Year'];
   const [data, setData] = useState([]);
   const handleChangeSelect = async (
     event: React.ChangeEvent<{ value: unknown }>
   ) => {
     event.preventDefault();
     setFilterOptions(event.target.value as string);
-    setInput("");
+    setInput('');
   };
   const handleOnClick = () => {
     let route: string = filterOptions.toLowerCase() + input;
     setRouteSearch(route);
   };
   const handleChangeSearch = async (value: string | null) => {
-    console.log("XD" + value);
-    let inputValue = value !== null ? value : "";
+    let inputValue = value !== null ? value : '';
     try {
       const options: AxiosResponse<any> = await axios.get(
-        "http://localhost:3010/search/" + filterOptions.toLowerCase() + "List",
+        'http://localhost:3010/search/' + filterOptions.toLowerCase() + 'List',
         {
           params: {
             searchValue: inputValue,
           },
         }
       );
-      console.log(options.data);
       setData(options.data);
     } catch (error) {
       throw new Error(error);
     }
   };
 
-  let listOptions = activeComp === "search" ? searchOptions : statisticsOptions;
+  let listOptions = activeComp === 'search' ? searchOptions : statisticsOptions;
   useEffect(() => {
-    setFilterOptions(activeComp === "search" ? "Movie" : "General");
+    setFilterOptions(activeComp === 'search' ? 'Movie' : 'General');
   }, [activeComp]);
 
   useEffect(() => {
-    // const getSearchInfo = async () => {
-    //   try {
-    //     const options: AxiosResponse<any> = await axios.get(
-    //       "http://localhost:3010/search/" + filterOptions.toLowerCase() + "List"
-    //     );
-    //     setData(options.data);
-    //     return options;
-    //   } catch (error) {
-    //     throw new Error(error);
-    //   }
-    // };
     const getSingleStats = async () => {
       try {
         const options: AxiosResponse<any> = await axios.get(
-          "http://localhost:3010/statistics/" +
+          'http://localhost:3010/statistics/' +
             filterOptions.toLowerCase() +
-            "List"
+            'List'
         );
         setData(options.data);
         return options;
@@ -156,35 +143,25 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
         throw new Error(error);
       }
     };
-    if (activeComp !== "search") {
+    if (activeComp !== 'search') {
       setRouteSearch(filterOptions.toLowerCase());
-      if (filterOptions === "Country" || filterOptions === "Year") {
+      if (filterOptions === 'Country' || filterOptions === 'Year') {
         getSingleStats();
       }
     }
-    // } else {
-    //   setRouteSearch(filterOptions.toLowerCase());
-    //   if (
-    //     filterOptions === "Movie" ||
-    //     filterOptions === "Actor" ||
-    //     filterOptions === "TvShow"
-    //   ) {
-    //     getSearchInfo();
-    //   }
   }, [activeComp, filterOptions, setRouteSearch]);
 
   return (
     <div css={divStyles}>
-      {filterOptions !== "General" && (
+      {filterOptions !== 'General' && (
         <Autocomplete
           css={inputStyle}
           id="search-bar"
-          // onBlur={() => console.log("Sth")}
           onInputChange={(event, value: string | null) => {
             handleChangeSearch(value);
           }}
           onChange={(event: any, value: string | null) => {
-            setInput(value !== null ? "/" + value : "");
+            setInput(value !== null ? '/' + value : '');
           }}
           options={data.map((data) => data)}
           renderInput={(params) => (
@@ -211,7 +188,7 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
           ))}
         </Select>
       </FormControl>
-      {filterOptions !== "General" && (
+      {filterOptions !== 'General' && (
         <Button
           variant="contained"
           color="secondary"

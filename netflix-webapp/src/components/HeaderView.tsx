@@ -1,28 +1,28 @@
-import React from "react";
-/** @jsxImportSource @emotion/react */ import { css } from "@emotion/react";
-/** @jsxImportSource @emotion/react */ import { Button } from "@material-ui/core";
+import React from 'react';
+/** @jsxImportSource @emotion/react */ import { css } from '@emotion/react';
+/** @jsxImportSource @emotion/react */ import { Button } from '@material-ui/core';
 
 const HeaderStyle = css({
-  padding: "1em",
-  backgroundColor: "black",
-  width: "90%",
-  display: "flex",
-  flexWrap: "nowrap",
-  justifyContent: "space-between",
-  alignItems: "center",
-  margin: "0 auto 3rem",
+  padding: '1em',
+  backgroundColor: 'black',
+  width: '90%',
+  display: 'flex',
+  flexWrap: 'nowrap',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  margin: '0 auto 3rem',
 });
 
 const DivTitleStyle = css({
-  display: "flex",
-  flexDirection: "row",
-  alignItems: "center",
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
 });
 
 const HeaderTitle = css({
   fontWeight: 500,
-  fontSize: "3rem",
-  color: "white",
+  fontSize: '3rem',
+  color: 'white',
 });
 
 interface ActiveProps {
@@ -45,7 +45,7 @@ const HeaderView: React.FC<ActiveProps> = ({ activeComp, setActiveComp }) => {
       <div css={DivTitleStyle}>
         <Button
           id="search"
-          style={{ color: activeComp === "search" ? "red" : "white" }}
+          style={{ color: activeComp === 'search' ? 'red' : 'white' }}
           onClick={handleActiveBut}
         >
           SEARCH
@@ -53,7 +53,7 @@ const HeaderView: React.FC<ActiveProps> = ({ activeComp, setActiveComp }) => {
         <Button
           id="statistics"
           color="primary"
-          style={{ color: activeComp === "statistics" ? "red" : "white" }}
+          style={{ color: activeComp === 'statistics' ? 'red' : 'white' }}
           onClick={handleActiveBut}
         >
           STATISTICS
