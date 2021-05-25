@@ -10,7 +10,7 @@ searchInfoRouter.get("/movieList", async (req, res) => {
     _id: string;
   }
   Data.aggregate([
-    { $match: { $text: { $search: "sky" }, type: "Movie" } },
+    { $match: { $text: { $search: inputSearch }, type: "Movie" } },
     {
       $group: {
         _id: "$title",
@@ -19,36 +19,6 @@ searchInfoRouter.get("/movieList", async (req, res) => {
     { $limit: 10 },
     { $sort: { _id: 1 } },
   ])
-
-    // db.datas.aggregate([
-    //     { $match: { type: "Movie" } },
-    //     {
-    //       $project: {
-    //         title: {
-    //           $regexFind: { input: "$title", regex: "a" },
-    //         },
-    //       },
-    //     },
-    //     {
-    //       $group: {
-    //         _id: "$title",
-    //       },
-    //     },
-    //     { $limit: 10 },
-    //     { $sort: { _id: 1 } },
-    //   ])
-
-    // db.datas.aggregate([
-    //   { $match: { $text: { $search: "sky" }, type: "Movie" } },
-    //   {
-    //     $group: {
-    //       _id: "$title",
-    //     },
-    //   },
-    //   { $limit: 10 },
-    //   { $sort: { _id: 1 } },
-    // ])
-
     .then((data) => {
       let labels: string[] = [];
       data.map((d: requestType) => {
@@ -60,10 +30,12 @@ searchInfoRouter.get("/movieList", async (req, res) => {
 });
 
 searchInfoRouter.get("/actorList", async (req, res) => {
+  let inputSearch = req.query.searchValue;
   interface requestType {
     _id: string;
   }
   Data.aggregate([
+    { $match: { $text: { $search: inputSearch } } },
     { $project: { actor: { $split: ["$cast", ", "] }, qty: 1 } },
     { $unwind: "$actor" },
     {
@@ -84,16 +56,18 @@ searchInfoRouter.get("/actorList", async (req, res) => {
 });
 
 searchInfoRouter.get("/tvshowList", async (req, res) => {
+  let inputSearch = req.query.searchValue;
   interface requestType {
     _id: string;
   }
   Data.aggregate([
-    { $match: { type: "TV Show" } },
+    { $match: { $text: { $search: inputSearch }, type: "TV Show" } },
     {
       $group: {
         _id: "$title",
       },
     },
+    { $limit: 10 },
     { $sort: { _id: 1 } },
   ])
     .then((data) => {
