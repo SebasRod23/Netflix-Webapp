@@ -23,8 +23,8 @@ let chart: any = false;
 const Chart: React.FC<StatisticsProps> = ({ routeSearch }) => {
   const [finalRoute, setFinalRoute] = useState('general');
   const [info, setInfo] = useState({
-    series: [],
-    labels: [],
+    series: [1],
+    labels: [1],
   });
   useEffect(() => {
     if (routeSearch !== 'country' && routeSearch !== 'year') {

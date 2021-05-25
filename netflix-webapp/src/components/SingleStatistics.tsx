@@ -38,6 +38,7 @@ const SingleStatistics: React.FC<StatisticsProps> = ({ routeSearch }) => {
 
   const getSingleStats = async (route: string): Promise<AxiosResponse<any>> => {
     try {
+      console.log(route);
       const numCountry: AxiosResponse<any> = await axios.get(
         'http://localhost:3010/statistics/' + route,
       );

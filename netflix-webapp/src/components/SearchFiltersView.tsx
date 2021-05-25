@@ -89,15 +89,16 @@ interface ActiveProps {
 
 const SearchFiltersViews: React.FC<ActiveProps> = ({
   activeComp,
+  routeSearch,
   setRouteSearch,
 }) => {
-  const [filterOptions, setFilterOptions] = React.useState('General');
+  const [filterOptions, setFilterOptions] = React.useState('Movie');
   const [input, setInput] = useState('');
   const searchOptions = ['Movie', 'Actor', 'TvShow'];
   const statisticsOptions = ['General', 'Country', 'Year'];
   const [data, setData] = useState([]);
   const handleChangeSelect = async (
-    event: React.ChangeEvent<{ value: unknown }>
+    event: React.ChangeEvent<{ value: unknown }>,
   ) => {
     event.preventDefault();
     setFilterOptions(event.target.value as string);
@@ -107,7 +108,7 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
     let route: string = filterOptions.toLowerCase() + input;
     setRouteSearch(route);
   };
-  const handleChangeSearch = async (value: string | null) => {
+  /*const handleChangeSearch = async (value: string | null) => {
     let inputValue = value !== null ? value : '';
     try {
       const options: AxiosResponse<any> = await axios.get(
@@ -116,26 +117,26 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
           params: {
             searchValue: inputValue,
           },
-        }
+        },
       );
       setData(options.data);
     } catch (error) {
       throw new Error(error);
     }
   };
-
+*/
   let listOptions = activeComp === 'search' ? searchOptions : statisticsOptions;
   useEffect(() => {
     setFilterOptions(activeComp === 'search' ? 'Movie' : 'General');
   }, [activeComp]);
 
   useEffect(() => {
-    const getSingleStats = async () => {
+    const getStatsList = async () => {
       try {
         const options: AxiosResponse<any> = await axios.get(
           'http://localhost:3010/statistics/' +
             filterOptions.toLowerCase() +
-            'List'
+            'List',
         );
         setData(options.data);
         return options;
@@ -143,40 +144,70 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
         throw new Error(error);
       }
     };
+
+    const getSearchList = async () => {
+      try {
+        const options: AxiosResponse<any> = await axios.get(
+          'http://localhost:3010/search/' +
+            filterOptions.toLowerCase() +
+            'List',
+        );
+        setData(options.data);
+      } catch (error) {
+        throw new Error(error);
+      }
+    };
+
     if (activeComp !== 'search') {
       setRouteSearch(filterOptions.toLowerCase());
       if (filterOptions === 'Country' || filterOptions === 'Year') {
-        getSingleStats();
+        getStatsList();
       }
     }
-  }, [activeComp, filterOptions, setRouteSearch]);
+  }, [activeComp, filterOptions]);
+
+  useEffect(() => {
+    const getSearchList = async () => {
+      try {
+        const options: AxiosResponse<any> = await axios.get(
+          'http://localhost:3010/search/' +
+            filterOptions.toLowerCase() +
+            'List',
+        );
+        setData(options.data);
+      } catch (error) {
+        throw new Error(error);
+      }
+    };
+    if (activeComp === 'search') getSearchList();
+  }, [input]);
 
   return (
     <div css={divStyles}>
       {filterOptions !== 'General' && (
         <Autocomplete
           css={inputStyle}
-          id="search-bar"
+          id='search-bar'
           onInputChange={(event, value: string | null) => {
-            handleChangeSearch(value);
+            setInput(value !== null ? '/' + value : '');
           }}
           onChange={(event: any, value: string | null) => {
             setInput(value !== null ? '/' + value : '');
           }}
           options={data.map((data) => data)}
           renderInput={(params) => (
-            <TextField {...params} label="Search info" margin="normal" />
+            <TextField {...params} label='Search info' margin='normal' />
           )}
         />
       )}
       <FormControl>
-        <InputLabel id="options-label" css={InputLabelStyles}>
+        <InputLabel id='options-label' css={InputLabelStyles}>
           Options
         </InputLabel>
         <Select
           css={selectStyle}
-          labelId="options-label"
-          id="options"
+          labelId='options-label'
+          id='options'
           value={filterOptions}
           onChange={handleChangeSelect}
           displayEmpty
@@ -190,8 +221,8 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
       </FormControl>
       {filterOptions !== 'General' && (
         <Button
-          variant="contained"
-          color="secondary"
+          variant='contained'
+          color='secondary'
           startIcon={<SearchIcon />}
           css={buttonStyle}
           onClick={() => handleOnClick()}
