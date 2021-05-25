@@ -1,19 +1,19 @@
-import express from "express";
-import { Db } from "mongodb";
-import Data from "../models/data.model";
+import express from 'express';
+import { Db } from 'mongodb';
+import Data from '../models/data.model';
 
 const searchInfoRouter = express.Router();
 
-searchInfoRouter.get("/movieList", async (req, res) => {
+searchInfoRouter.get('/movieList', async (req, res) => {
   let inputSearch = req.query.searchValue;
   interface requestType {
     _id: string;
   }
   Data.aggregate([
-    { $match: { $text: { $search: inputSearch }, type: "Movie" } },
+    { $match: { $text: { $search: inputSearch }, type: 'Movie' } },
     {
       $group: {
-        _id: "$title",
+        _id: '$title',
       },
     },
     { $limit: 10 },
@@ -26,21 +26,21 @@ searchInfoRouter.get("/movieList", async (req, res) => {
       });
       res.json(labels);
     })
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(400).json('Error: ' + err));
 });
 
-searchInfoRouter.get("/actorList", async (req, res) => {
+searchInfoRouter.get('/actorList', async (req, res) => {
   let inputSearch = req.query.searchValue;
   interface requestType {
     _id: string;
   }
   Data.aggregate([
     { $match: { $text: { $search: inputSearch } } },
-    { $project: { actor: { $split: ["$cast", ", "] }, qty: 1 } },
-    { $unwind: "$actor" },
+    { $project: { actor: { $split: ['$cast', ', '] }, qty: 1 } },
+    { $unwind: '$actor' },
     {
       $group: {
-        _id: "$actor",
+        _id: '$actor',
       },
     },
   ])
@@ -52,19 +52,19 @@ searchInfoRouter.get("/actorList", async (req, res) => {
       });
       res.json(labels);
     })
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(400).json('Error: ' + err));
 });
 
-searchInfoRouter.get("/tvshowList", async (req, res) => {
+searchInfoRouter.get('/tvshowList', async (req, res) => {
   let inputSearch = req.query.searchValue;
   interface requestType {
     _id: string;
   }
   Data.aggregate([
-    { $match: { $text: { $search: inputSearch }, type: "TV Show" } },
+    { $match: { $text: { $search: inputSearch }, type: 'TV Show' } },
     {
       $group: {
-        _id: "$title",
+        _id: '$title',
       },
     },
     { $limit: 10 },
@@ -77,7 +77,7 @@ searchInfoRouter.get("/tvshowList", async (req, res) => {
       });
       res.json(labels);
     })
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(400).json('Error: ' + err));
 });
 
 export default searchInfoRouter;
