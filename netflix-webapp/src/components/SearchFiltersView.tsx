@@ -107,6 +107,24 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
     let route: string = filterOptions.toLowerCase() + input;
     setRouteSearch(route);
   };
+  const handleChangeSearch = async (value: string | null) => {
+    console.log("XD" + value);
+    let inputValue = value !== null ? value : "";
+    try {
+      const options: AxiosResponse<any> = await axios.get(
+        "http://localhost:3010/search/" + filterOptions.toLowerCase() + "List",
+        {
+          params: {
+            searchValue: inputValue,
+          },
+        }
+      );
+      console.log(options.data);
+      setData(options.data);
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
 
   let listOptions = activeComp === "search" ? searchOptions : statisticsOptions;
   useEffect(() => {
@@ -114,17 +132,17 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
   }, [activeComp]);
 
   useEffect(() => {
-    const getSearchInfo = async () => {
-      try {
-        const options: AxiosResponse<any> = await axios.get(
-          "http://localhost:3010/search/" + filterOptions.toLowerCase() + "List"
-        );
-        setData(options.data);
-        return options;
-      } catch (error) {
-        throw new Error(error);
-      }
-    };
+    // const getSearchInfo = async () => {
+    //   try {
+    //     const options: AxiosResponse<any> = await axios.get(
+    //       "http://localhost:3010/search/" + filterOptions.toLowerCase() + "List"
+    //     );
+    //     setData(options.data);
+    //     return options;
+    //   } catch (error) {
+    //     throw new Error(error);
+    //   }
+    // };
     const getSingleStats = async () => {
       try {
         const options: AxiosResponse<any> = await axios.get(
@@ -143,16 +161,16 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
       if (filterOptions === "Country" || filterOptions === "Year") {
         getSingleStats();
       }
-    } else {
-      setRouteSearch(filterOptions.toLowerCase());
-      if (
-        filterOptions === "Movie" ||
-        filterOptions === "Actor" ||
-        filterOptions === "TvShow"
-      ) {
-        getSearchInfo();
-      }
     }
+    // } else {
+    //   setRouteSearch(filterOptions.toLowerCase());
+    //   if (
+    //     filterOptions === "Movie" ||
+    //     filterOptions === "Actor" ||
+    //     filterOptions === "TvShow"
+    //   ) {
+    //     getSearchInfo();
+    //   }
   }, [activeComp, filterOptions, setRouteSearch]);
 
   return (
@@ -161,10 +179,13 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
         <Autocomplete
           css={inputStyle}
           id="search-bar"
-          onBlur={() => console.log("Sth")}
-          onChange={(event, value) =>
-            setInput(value !== null ? "/" + value : "")
-          }
+          // onBlur={() => console.log("Sth")}
+          onInputChange={(event, value: string | null) => {
+            handleChangeSearch(value);
+          }}
+          onChange={(event: any, value: string | null) => {
+            setInput(value !== null ? "/" + value : "");
+          }}
           options={data.map((data) => data)}
           renderInput={(params) => (
             <TextField {...params} label="Search info" margin="normal" />
