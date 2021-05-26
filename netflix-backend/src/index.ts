@@ -26,7 +26,7 @@ connection.once('open', () => {
 const dataRouter = listRouter;
 const statisticsRouter = routerStatistics;
 const searchRouter = searchInfoRouter;
-app.use('/', dataRouter);
+app.use('/list', dataRouter);
 app.use('/statistics', statisticsRouter);
 app.use('/search', searchRouter);
 app.listen(port, () => {

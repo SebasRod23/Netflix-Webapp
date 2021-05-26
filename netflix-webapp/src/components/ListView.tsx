@@ -77,7 +77,12 @@ interface IData {
   description: string;
 }
 
-const ListView: React.FC = () => {
+interface ListProps {
+  routeSearch: string;
+}
+
+const ListView: React.FC<ListProps> = ({ routeSearch }) => {
+  const [finalRoute, setFinalRoute] = useState('/movie');
   const [data, setData] = useState<IData[]>([]);
   const limit = 20;
   const [pagina, setPagina] = useState(0);
@@ -111,14 +116,20 @@ const ListView: React.FC = () => {
     setLoading(true);
   };
 
-  const fetchData = async (): Promise<AxiosResponse<any>> => {
+  const fetchData = async (route: string): Promise<AxiosResponse<any>> => {
     try {
+      console.log(finalRoute);
       const skip = pagina * limit;
-      const body = { skip, limit };
-      const data: AxiosResponse<any> = await axios.post(
-        'http://localhost:3010/',
-        body,
+      const data: AxiosResponse<any> = await axios.get(
+        'http://localhost:3010/list/movie',
+        {
+          params: {
+            skip: skip,
+            limit: limit,
+          },
+        }
       );
+
       return data;
     } catch (error) {
       throw new Error(error);
@@ -126,13 +137,18 @@ const ListView: React.FC = () => {
   };
 
   const getData = () => {
-    fetchData()
+    fetchData(finalRoute)
       .then((response) => {
         setData(response.data);
         setLoading(false);
       })
       .catch((err: Error) => console.log(err));
   };
+
+  useEffect(() => {
+    console.log('UE --> ' + routeSearch);
+    setFinalRoute(routeSearch);
+  }, [routeSearch]);
 
   useEffect(() => {
     getData();
@@ -143,7 +159,7 @@ const ListView: React.FC = () => {
     <div css={ViewStyle}>
       <div css={ListStyle}>
         {isLoading ? (
-          <CircularProgress color='secondary' />
+          <CircularProgress color="secondary" />
         ) : (
           data.map((element) => (
             <div

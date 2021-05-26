@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
-interface IData extends Document {
+export interface IData extends Document {
   show_id: string;
   type: 'Movie' | 'TV Show';
   title: string;
@@ -30,6 +30,6 @@ const dataSchema: Schema = new Schema({
   description: { type: String },
 });
 
-const Data = mongoose.model<IData>('Data', dataSchema);
+export const Data = mongoose.model<IData>('Data', dataSchema);
 
 export default Data;

@@ -40,7 +40,7 @@ const SingleStatistics: React.FC<StatisticsProps> = ({ routeSearch }) => {
     try {
       console.log(route);
       const numCountry: AxiosResponse<any> = await axios.get(
-        'http://localhost:3010/statistics/' + route,
+        'http://localhost:3010/statistics/' + route
       );
       setLabel(numCountry.data.label);
       setNumLabel(numCountry.data.number);
