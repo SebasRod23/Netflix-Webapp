@@ -12,7 +12,7 @@ const MainComponent: React.FC<ActiveProps> = ({ activeComp }) => {
   const [routeSearch, setRouteSearch] = useState('');
   let renderedComp =
     activeComp === 'search' ? (
-      <ListView />
+      <ListView routeSearch={routeSearch} />
     ) : (
       <StatisticsView routeSearch={routeSearch} />
     );
