@@ -132,7 +132,6 @@ const ListView: React.FC<ListProps> = ({ routeSearch }) => {
   }, [routeSearch]);
 
   useEffect(() => {
-    console.log('FR: ' + finalRoute);
     const fetchData = async (): Promise<AxiosResponse<any>> => {
       try {
         const skip = pagina * limit;
