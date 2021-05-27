@@ -44,7 +44,7 @@ listRouter.get('/tvshow', (req, res) => {
   let skipInput = req.query.skip;
   let limitInput = req.query.limit;
   Data.aggregate([
-    { $match: { type: 'TvShow' } },
+    { $match: { type: 'TV Show' } },
     { $sort: { _id: 1 } },
     { $skip: Number(skipInput) },
     { $limit: Number(limitInput) },
@@ -57,10 +57,31 @@ listRouter.get('/tvshow', (req, res) => {
 
 listRouter.get('/movie/:id', async (req, res) => {
   let movieName = req.params.id;
-
   Data.aggregate([
     { $match: { type: 'Movie' } },
     { $match: { title: movieName } },
+  ])
+    .then((data: IData[]) => {
+      res.json(data);
+    })
+    .catch((err) => res.status(400).json('Error: ' + err));
+});
+
+listRouter.get('/actor/:id', async (req, res) => {
+  let actorName = req.params.id;
+  Data.aggregate([{ $match: { $expr: { $in: [actorName, '$castList'] } } }])
+    .then((data: IData[]) => {
+      res.json(data);
+    })
+    .catch((err) => res.status(400).json('Error: ' + err));
+});
+
+listRouter.get('/tvshow/:id', async (req, res) => {
+  let tvShowName = req.params.id;
+
+  Data.aggregate([
+    { $match: { type: 'TV Show' } },
+    { $match: { title: tvShowName } },
   ])
     .then((data: IData[]) => {
       res.json(data);

@@ -163,6 +163,8 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
       if (filterOptions === 'Country' || filterOptions === 'Year') {
         getStatsList();
       }
+    } else {
+      setRouteSearch(filterOptions.toLowerCase());
     }
   }, [activeComp, filterOptions]);
 
@@ -177,7 +179,9 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
         throw new Error(error);
       }
     };
-    if (activeComp === 'search') getSearchList();
+    if (activeComp === 'search') {
+      getSearchList();
+    }
   }, [input]);
 
   return (
