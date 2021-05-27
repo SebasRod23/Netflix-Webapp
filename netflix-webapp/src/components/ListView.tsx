@@ -120,12 +120,19 @@ const ListView: React.FC<ListProps> = ({ routeSearch }) => {
   useEffect(() => {
     if (routeSearch === '') {
       setFinalRoute('movie');
+    } else if (
+      routeSearch.split('/')[0] !== 'movie' &&
+      routeSearch.split('/')[0] !== 'actor' &&
+      routeSearch.split('/')[0] !== 'tvshow'
+    ) {
+      setFinalRoute('movie');
     } else {
       setFinalRoute(routeSearch);
     }
   }, [routeSearch]);
 
   useEffect(() => {
+    console.log('FR: ' + finalRoute);
     const fetchData = async (): Promise<AxiosResponse<any>> => {
       try {
         const skip = pagina * limit;
