@@ -98,7 +98,7 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
   const statisticsOptions = ['General', 'Country', 'Year'];
   const [data, setData] = useState([]);
   const handleChangeSelect = async (
-    event: React.ChangeEvent<{ value: unknown }>
+    event: React.ChangeEvent<{ value: unknown }>,
   ) => {
     event.preventDefault();
     setFilterOptions(event.target.value as string);
@@ -121,7 +121,7 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
         const options: AxiosResponse<any> = await axios.get(
           'http://localhost:3010/statistics/' +
             filterOptions.toLowerCase() +
-            'List'
+            'List',
         );
         setData(options.data);
         return options;
@@ -133,7 +133,9 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
     const getSearchList = async () => {
       try {
         const options: AxiosResponse<any> = await axios.get(
-          'http://localhost:3010/search/' + filterOptions.toLowerCase() + 'List'
+          'http://localhost:3010/search/' +
+            filterOptions.toLowerCase() +
+            'List',
         );
         setData(options.data);
         return options;
@@ -164,24 +166,25 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
       {filterOptions !== 'General' && (
         <Autocomplete
           css={inputStyle}
-          id="search-bar"
+          id='search-bar'
           onChange={(event: any, value: string | null) => {
             setInput(value !== null ? '/' + value : '');
           }}
+          value={input}
           options={data.map((data) => data)}
           renderInput={(params) => (
-            <TextField {...params} label="Search info" margin="normal" />
+            <TextField {...params} label='Search info' margin='normal' />
           )}
         />
       )}
       <FormControl>
-        <InputLabel id="options-label" css={InputLabelStyles}>
+        <InputLabel id='options-label' css={InputLabelStyles}>
           Options
         </InputLabel>
         <Select
           css={selectStyle}
-          labelId="options-label"
-          id="options"
+          labelId='options-label'
+          id='options'
           value={filterOptions}
           onChange={handleChangeSelect}
           displayEmpty
@@ -195,8 +198,8 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
       </FormControl>
       {filterOptions !== 'General' && (
         <Button
-          variant="contained"
-          color="secondary"
+          variant='contained'
+          color='secondary'
           startIcon={<SearchIcon />}
           css={buttonStyle}
           onClick={() => handleOnClick()}

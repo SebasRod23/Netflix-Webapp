@@ -135,17 +135,31 @@ const ListView: React.FC<ListProps> = ({ routeSearch }) => {
     const fetchData = async (): Promise<AxiosResponse<any>> => {
       try {
         const skip = pagina * limit;
-        const data: AxiosResponse<any> = await axios.get(
-          'http://localhost:3010/list/' + finalRoute,
-          {
+        let data: AxiosResponse<any>;
+        console.log(routeSearch);
+        if (routeSearch.split('/').length === 2) {
+          const id = routeSearch.split('/')[1];
+          console.log(id);
+          const body = {
+            skip: skip,
+            limit: limit,
+            id: id,
+          };
+          data = await axios.post(
+            'http://localhost:3010/list/' + finalRoute.split('/')[0],
+            body,
+          );
+        } else {
+          data = await axios.get('http://localhost:3010/list/' + finalRoute, {
             params: {
               skip: skip,
               limit: limit,
             },
-          }
-        );
+          });
+        }
         setData(data.data);
         setLoading(false);
+        console.log(data.data);
         return data.data;
       } catch (error) {
         throw new Error(error);
@@ -159,7 +173,7 @@ const ListView: React.FC<ListProps> = ({ routeSearch }) => {
     <div css={ViewStyle}>
       <div css={ListStyle}>
         {isLoading ? (
-          <CircularProgress color="secondary" />
+          <CircularProgress color='secondary' />
         ) : (
           data.map((element) => (
             <div
