@@ -27,7 +27,6 @@ const StatisticsView: React.FC<StatisticsProps> = ({ routeSearch }) => {
     );
 
   useEffect(() => {
-    console.log('UE --> ' + routeSearch);
     if (
       routeSearch.split('/')[0] !== 'country' &&
       routeSearch.split('/')[0] !== 'year'

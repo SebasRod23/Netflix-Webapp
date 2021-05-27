@@ -116,7 +116,6 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
   }, [activeComp]);
 
   useEffect(() => {
-    console.log('F: ' + filterOptions.toLowerCase());
     const getStatsList = async () => {
       try {
         const options: AxiosResponse<any> = await axios.get(
@@ -133,9 +132,6 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
 
     const getSearchList = async () => {
       try {
-        console.log(
-          'http://localhost:3010/search/' + filterOptions.toLowerCase() + 'List'
-        );
         const options: AxiosResponse<any> = await axios.get(
           'http://localhost:3010/search/' + filterOptions.toLowerCase() + 'List'
         );
@@ -162,22 +158,6 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
       }
     }
   }, [activeComp, filterOptions]);
-
-  // useEffect(() => {
-  //   const getSearchList = async () => {
-  //     try {
-  //       const options: AxiosResponse<any> = await axios.get(
-  //         'http://localhost:3010/search/' + filterOptions.toLowerCase() + 'List'
-  //       );
-  //       setData(options.data);
-  //     } catch (error) {
-  //       throw new Error(error);
-  //     }
-  //   };
-  //   if (activeComp === 'search') {
-  //     getSearchList();
-  //   }
-  // }, [input]);
 
   return (
     <div css={divStyles}>
