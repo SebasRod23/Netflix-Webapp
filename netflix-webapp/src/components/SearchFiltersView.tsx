@@ -110,29 +110,13 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
     setRouteSearch(route);
   };
 
-  /*const handleChangeSearch = async (value: string | null) => {
-    let inputValue = value !== null ? value : '';
-    try {
-      const options: AxiosResponse<any> = await axios.get(
-        'http://localhost:3010/search/' + filterOptions.toLowerCase() + 'List',
-        {
-          params: {
-            searchValue: inputValue,
-          },
-        },
-      );
-      setData(options.data);
-    } catch (error) {
-      throw new Error(error);
-    }
-  };
-*/
   let listOptions = activeComp === 'search' ? searchOptions : statisticsOptions;
   useEffect(() => {
     setFilterOptions(activeComp === 'search' ? 'Movie' : 'General');
   }, [activeComp]);
 
   useEffect(() => {
+    console.log('F: ' + filterOptions.toLowerCase());
     const getStatsList = async () => {
       try {
         const options: AxiosResponse<any> = await axios.get(
@@ -149,10 +133,14 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
 
     const getSearchList = async () => {
       try {
+        console.log(
+          'http://localhost:3010/search/' + filterOptions.toLowerCase() + 'List'
+        );
         const options: AxiosResponse<any> = await axios.get(
           'http://localhost:3010/search/' + filterOptions.toLowerCase() + 'List'
         );
         setData(options.data);
+        return options;
       } catch (error) {
         throw new Error(error);
       }
@@ -165,24 +153,31 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
       }
     } else {
       setRouteSearch(filterOptions.toLowerCase());
+      if (
+        filterOptions === 'Movie' ||
+        filterOptions === 'Actor' ||
+        filterOptions === 'TvShow'
+      ) {
+        getSearchList();
+      }
     }
   }, [activeComp, filterOptions]);
 
-  useEffect(() => {
-    const getSearchList = async () => {
-      try {
-        const options: AxiosResponse<any> = await axios.get(
-          'http://localhost:3010/search/' + filterOptions.toLowerCase() + 'List'
-        );
-        setData(options.data);
-      } catch (error) {
-        throw new Error(error);
-      }
-    };
-    if (activeComp === 'search') {
-      getSearchList();
-    }
-  }, [input]);
+  // useEffect(() => {
+  //   const getSearchList = async () => {
+  //     try {
+  //       const options: AxiosResponse<any> = await axios.get(
+  //         'http://localhost:3010/search/' + filterOptions.toLowerCase() + 'List'
+  //       );
+  //       setData(options.data);
+  //     } catch (error) {
+  //       throw new Error(error);
+  //     }
+  //   };
+  //   if (activeComp === 'search') {
+  //     getSearchList();
+  //   }
+  // }, [input]);
 
   return (
     <div css={divStyles}>
@@ -190,9 +185,6 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
         <Autocomplete
           css={inputStyle}
           id="search-bar"
-          onInputChange={(event, value: string | null) => {
-            setInput(value !== null ? '/' + value : '');
-          }}
           onChange={(event: any, value: string | null) => {
             setInput(value !== null ? '/' + value : '');
           }}
