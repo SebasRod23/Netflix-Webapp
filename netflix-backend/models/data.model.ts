@@ -13,6 +13,7 @@ export interface IData extends Document {
   duration: string;
   listed_in: string;
   description: string;
+  castList: string[];
 }
 
 const dataSchema: Schema = new Schema({
@@ -28,6 +29,7 @@ const dataSchema: Schema = new Schema({
   duration: { type: String },
   listed_in: { type: String },
   description: { type: String },
+  castList: [{ type: String }],
 });
 
 export const Data = mongoose.model<IData>('Data', dataSchema);

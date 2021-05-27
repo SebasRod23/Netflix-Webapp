@@ -82,7 +82,7 @@ interface ListProps {
 }
 
 const ListView: React.FC<ListProps> = ({ routeSearch }) => {
-  const [finalRoute, setFinalRoute] = useState('/movie');
+  const [finalRoute, setFinalRoute] = React.useState<string>('movie');
   const [data, setData] = useState<IData[]>([]);
   const limit = 20;
   const [pagina, setPagina] = useState(0);
@@ -107,6 +107,7 @@ const ListView: React.FC<ListProps> = ({ routeSearch }) => {
     setOpen(true);
     setElementData(elementData);
   };
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -116,44 +117,37 @@ const ListView: React.FC<ListProps> = ({ routeSearch }) => {
     setLoading(true);
   };
 
-  const fetchData = async (route: string): Promise<AxiosResponse<any>> => {
-    try {
-      console.log(finalRoute);
-      const skip = pagina * limit;
-      const data: AxiosResponse<any> = await axios.get(
-        'http://localhost:3010/list/movie',
-        {
-          params: {
-            skip: skip,
-            limit: limit,
-          },
-        }
-      );
-
-      return data;
-    } catch (error) {
-      throw new Error(error);
-    }
-  };
-
-  const getData = () => {
-    fetchData(finalRoute)
-      .then((response) => {
-        setData(response.data);
-        setLoading(false);
-      })
-      .catch((err: Error) => console.log(err));
-  };
-
   useEffect(() => {
-    console.log('UE --> ' + routeSearch);
-    setFinalRoute(routeSearch);
+    if (routeSearch === '') {
+      setFinalRoute('movie');
+    } else {
+      setFinalRoute(routeSearch);
+    }
   }, [routeSearch]);
 
   useEffect(() => {
-    getData();
+    const fetchData = async (): Promise<AxiosResponse<any>> => {
+      try {
+        const skip = pagina * limit;
+        const data: AxiosResponse<any> = await axios.get(
+          'http://localhost:3010/list/' + finalRoute,
+          {
+            params: {
+              skip: skip,
+              limit: limit,
+            },
+          }
+        );
+        setData(data.data);
+        setLoading(false);
+        return data.data;
+      } catch (error) {
+        throw new Error(error);
+      }
+    };
+    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pagina]);
+  }, [pagina, finalRoute]);
 
   return (
     <div css={ViewStyle}>
