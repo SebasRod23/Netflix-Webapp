@@ -151,6 +151,7 @@ const ListView: React.FC<ListProps> = ({ routeSearch }) => {
           );
         } else {
           data = await axios.get('http://localhost:3010/list/' + finalRoute, {
+
             params: {
               skip: skip,
               limit: limit,
@@ -166,7 +167,6 @@ const ListView: React.FC<ListProps> = ({ routeSearch }) => {
       }
     };
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pagina, finalRoute]);
 
   return (

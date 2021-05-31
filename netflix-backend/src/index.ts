@@ -12,6 +12,7 @@ app.use(cors());
 app.use(express.json());
 const uri =
   'mongodb+srv://Gi:M0NG0P4ssword@cluster0.3qjoe.mongodb.net/NetflixDB?retryWrites=true&w=majority';
+app.use(express.urlencoded({ extended: true }));
 
 mongoose.connect(uri as string, {
   useNewUrlParser: true,
