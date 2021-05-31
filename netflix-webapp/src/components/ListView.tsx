@@ -135,8 +135,14 @@ const ListView: React.FC<ListProps> = ({ routeSearch }) => {
     const fetchData = async (): Promise<AxiosResponse<any>> => {
       try {
         const skip = pagina * limit;
+        let routeGet =
+          finalRoute.split('/').length === 2
+            ? finalRoute.split('/')[0] +
+              '/' +
+              encodeURIComponent(finalRoute.split('/')[1])
+            : finalRoute;
         const data: AxiosResponse<any> = await axios.get(
-          'http://localhost:3010/list/' + finalRoute,
+          'http://localhost:3010/list/' + routeGet,
           {
             params: {
               skip: skip,
