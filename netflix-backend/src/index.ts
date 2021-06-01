@@ -6,7 +6,7 @@ import routerStatistics from '../routes/statisticsChart';
 import searchInfoRouter from '../routes/searchInfo';
 const app = express();
 
-const port = process.env.PORT || 3010;
+const port = process.env.PORT || 8080;
 
 app.use(cors());
 app.use(express.json());

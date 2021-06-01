@@ -119,7 +119,7 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
     const getStatsList = async () => {
       try {
         const options: AxiosResponse<any> = await axios.get(
-          'http://localhost:3010/statistics/' +
+          'http://localhost:8080/statistics/' +
             filterOptions.toLowerCase() +
             'List'
         );
@@ -133,7 +133,7 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
     const getSearchList = async () => {
       try {
         const options: AxiosResponse<any> = await axios.get(
-          'http://localhost:3010/search/' + filterOptions.toLowerCase() + 'List'
+          'http://localhost:8080/search/' + filterOptions.toLowerCase() + 'List'
         );
         setData(options.data);
         return options;

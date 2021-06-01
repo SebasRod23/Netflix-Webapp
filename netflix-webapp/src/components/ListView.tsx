@@ -136,7 +136,7 @@ const ListView: React.FC<ListProps> = ({ routeSearch }) => {
       try {
         const skip = pagina * limit;
         const data: AxiosResponse<any> = await axios.get(
-          'http://localhost:3010/list/' + finalRoute,
+          'http://localhost:8080/list/' + finalRoute,
           {
             params: {
               skip: skip,
