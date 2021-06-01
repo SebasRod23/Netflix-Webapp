@@ -55,8 +55,8 @@ listRouter.get('/tvshow', (req, res) => {
     .catch((err) => res.status(400).json('Error: ' + err));
 });
 
-listRouter.get('/movie/:id', async (req, res) => {
-  let movieName = req.params.id;
+listRouter.post('/movie', async (req, res) => {
+  let movieName = req.body.id;
   Data.aggregate([
     { $match: { type: 'Movie' } },
     { $match: { title: movieName } },
@@ -67,8 +67,8 @@ listRouter.get('/movie/:id', async (req, res) => {
     .catch((err) => res.status(400).json('Error: ' + err));
 });
 
-listRouter.get('/actor/:id', async (req, res) => {
-  let actorName = req.params.id;
+listRouter.post('/actor', async (req, res) => {
+  let actorName = req.body.id;
   Data.aggregate([{ $match: { $expr: { $in: [actorName, '$castList'] } } }])
     .then((data: IData[]) => {
       res.json(data);
@@ -76,8 +76,8 @@ listRouter.get('/actor/:id', async (req, res) => {
     .catch((err) => res.status(400).json('Error: ' + err));
 });
 
-listRouter.get('/tvshow/:id', async (req, res) => {
-  let tvShowName = req.params.id;
+listRouter.post('/tvshow', async (req, res) => {
+  let tvShowName = req.body.id;
 
   Data.aggregate([
     { $match: { type: 'TV Show' } },

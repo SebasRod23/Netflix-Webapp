@@ -40,10 +40,9 @@ const SingleStatistics: React.FC<StatisticsProps> = ({ routeSearch }) => {
     try {
       console.log(route);
       const numCountry: AxiosResponse<any> = await axios.get(
-        'http://localhost:3010/statistics/' + route
+        'http://localhost:3010/statistics/' + route,
       );
-      setLabel(numCountry.data.label);
-      setNumLabel(numCountry.data.number);
+      console.log(numCountry.data);
       return numCountry;
     } catch (error) {
       throw new Error(error);
@@ -52,7 +51,10 @@ const SingleStatistics: React.FC<StatisticsProps> = ({ routeSearch }) => {
   useEffect(() => {
     setLabel('Not found');
     setNumLabel('');
-    getSingleStats(routeSearch);
+    getSingleStats(routeSearch).then((res) => {
+      setLabel(res.data.label);
+      setNumLabel(res.data.number);
+    });
   }, [routeSearch]);
 
   return (

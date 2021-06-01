@@ -98,7 +98,7 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
   const statisticsOptions = ['General', 'Country', 'Year'];
   const [data, setData] = useState([]);
   const handleChangeSelect = async (
-    event: React.ChangeEvent<{ value: unknown }>
+    event: React.ChangeEvent<{ value: unknown }>,
   ) => {
     event.preventDefault();
     setFilterOptions(event.target.value as string);
@@ -121,31 +121,35 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
         const options: AxiosResponse<any> = await axios.get(
           'http://localhost:3010/statistics/' +
             filterOptions.toLowerCase() +
-            'List'
+            'List',
         );
-        setData(options.data);
+
         return options;
       } catch (error) {
         throw new Error(error);
       }
     };
-
     const getSearchList = async () => {
       try {
         const options: AxiosResponse<any> = await axios.get(
-          'http://localhost:3010/search/' + filterOptions.toLowerCase() + 'List'
+          'http://localhost:3010/search/' +
+            filterOptions.toLowerCase() +
+            'List',
         );
-        setData(options.data);
+
         return options;
       } catch (error) {
         throw new Error(error);
       }
     };
 
+    setInput('');
     if (activeComp !== 'search') {
       setRouteSearch(filterOptions.toLowerCase());
       if (filterOptions === 'Country' || filterOptions === 'Year') {
-        getStatsList();
+        getStatsList().then((res) => {
+          setData(res.data);
+        });
       }
     } else {
       setRouteSearch(filterOptions.toLowerCase());
@@ -154,7 +158,9 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
         filterOptions === 'Actor' ||
         filterOptions === 'TvShow'
       ) {
-        getSearchList();
+        getSearchList().then((res) => {
+          setData(res.data);
+        });
       }
     }
   }, [activeComp, filterOptions]);
@@ -164,24 +170,25 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
       {filterOptions !== 'General' && (
         <Autocomplete
           css={inputStyle}
-          id="search-bar"
+          id='search-bar'
+          value={input.substring(1)}
           onChange={(event: any, value: string | null) => {
             setInput(value !== null ? '/' + value : '');
           }}
           options={data.map((data) => data)}
           renderInput={(params) => (
-            <TextField {...params} label="Search info" margin="normal" />
+            <TextField {...params} label='Search info' margin='normal' />
           )}
         />
       )}
       <FormControl>
-        <InputLabel id="options-label" css={InputLabelStyles}>
+        <InputLabel id='options-label' css={InputLabelStyles}>
           Options
         </InputLabel>
         <Select
           css={selectStyle}
-          labelId="options-label"
-          id="options"
+          labelId='options-label'
+          id='options'
           value={filterOptions}
           onChange={handleChangeSelect}
           displayEmpty
@@ -195,8 +202,8 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
       </FormControl>
       {filterOptions !== 'General' && (
         <Button
-          variant="contained"
-          color="secondary"
+          variant='contained'
+          color='secondary'
           startIcon={<SearchIcon />}
           css={buttonStyle}
           onClick={() => handleOnClick()}
