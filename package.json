@@ -4,7 +4,7 @@
     "install-client": "cd netflix-webapp && yarn install",
     "install-server": "cd netflix-backend && yarn install",
     "heroku-postbuild": "yarn install && (yarn run install-client && yarn run build) & yarn run install-server",
-    "server": "cd netflix-backend && yarn dev",
+    "server": "cd netflix-backend && yarn start",
     "client": "cd netflix-webapp && yarn start",
     "develop": "yarn npm-run-all --parallel server client ",
     "start": "yarn npm-run-all --parallel server client "
