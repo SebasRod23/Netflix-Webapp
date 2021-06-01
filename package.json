@@ -3,10 +3,11 @@
     "build": "cd netflix-webapp && yarn run build",
     "install-client": "cd netflix-webapp && yarn install",
     "install-server": "cd netflix-backend && yarn install",
-    "heroku-postbuild": "yarn run install-client && yarn run build && yarn run install-server",
+    "heroku-postbuild": "(yarn run install-client && yarn run build) & yarn run install-server",
     "server": "cd netflix-backend && yarn dev",
-    "develop": "concurrently --kill-others-on-fail \"yarn run server\" \"yarn run start --prefix ./netflix-webapp\"",
-    "start": "concurrently --kill-others-on-fail \"yarn run server\" \"yarn run start --prefix ./netflix-webapp\""
+    "client": "cd netflix-webapp && yarn start",
+    "develop": "yarn run client & yarn run server",
+    "start": "yarn run client & yarn run server"
   },
   "engines": {
     "node": "12.16.2"
