@@ -4,10 +4,11 @@ import mongoose from 'mongoose';
 import listRouter from '../routes/data';
 import routerStatistics from '../routes/statisticsChart';
 import searchInfoRouter from '../routes/searchInfo';
+import path from "path";
 const app = express();
 
 const port = process.env.PORT || 8080;
-
+app.use(express.static(path.join(__dirname, '..','..','netflix-webapp','build')));
 app.use(cors());
 app.use(express.json());
 const uri =
@@ -26,9 +27,14 @@ connection.once('open', () => {
 const dataRouter = listRouter;
 const statisticsRouter = routerStatistics;
 const searchRouter = searchInfoRouter;
+
+
 app.use('/list', dataRouter);
 app.use('/statistics', statisticsRouter);
-app.use('/search', searchRouter);
+app.use('/search', searchRouter); 
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../netflix-webapp/build', 'index.html'));
+});
 app.listen(port, () => {
   console.log(`Server listening on http://localhost:${port}`);
 });
