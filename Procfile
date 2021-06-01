@@ -1,1 +1,1 @@
-web:yarn start
+web: cd netflix-backend && yarn start
