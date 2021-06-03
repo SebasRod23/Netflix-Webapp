@@ -10,10 +10,10 @@ const landingPageStyle = css({
 const LandingPage: React.FC = () => {
   const [activeComp, setActiveComp] = useState<string>('search');
   return (
-    <div css={landingPageStyle}>
-      <HeaderView activeComp={activeComp} setActiveComp={setActiveComp} />
-      <MainComponent activeComp={activeComp} />
-    </div>
+      <div css={landingPageStyle}>
+        <HeaderView activeComp={activeComp} setActiveComp={setActiveComp} />
+        <MainComponent activeComp={activeComp} />
+      </div>
   );
 };
 
