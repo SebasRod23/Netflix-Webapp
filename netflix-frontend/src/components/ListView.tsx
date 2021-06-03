@@ -146,11 +146,11 @@ const ListView: React.FC<ListProps> = ({ routeSearch }) => {
             id: id,
           };
           data = await axios.post(
-            'http://localhost:3010/list/' + finalRoute.split('/')[0],
+            'https://netflix-webapp-adb.herokuapp.com/list/' + finalRoute.split('/')[0],
             body,
           );
         } else {
-          data = await axios.get('http://localhost:3010/list/' + finalRoute, {
+          data = await axios.get('https://netflix-webapp-adb.herokuapp.com/list/' + finalRoute, {
 
             params: {
               skip: skip,

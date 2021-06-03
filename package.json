@@ -4,8 +4,14 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon --exec ts-node src/index.ts",
-    "tsc": "tsc"
+    "dev": "ts-node index.ts",
+    "tsc": "tsc",
+    "build": "cd netflix-frontend && yarn build",
+    "install-client": "cd netflix-frontend && yarn install",
+    "heroku-postbuild": "yarn run install-client && yarn build",
+    "server": "nodemon --exec ts-node index.ts",
+    "develop": "yarn run dev",
+    "start": "yarn run dev"
   },
   "dependencies": {
     "@types/cors": "^2.8.10",

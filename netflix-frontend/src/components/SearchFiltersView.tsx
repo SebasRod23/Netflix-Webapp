@@ -119,7 +119,7 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
     const getStatsList = async () => {
       try {
         const options: AxiosResponse<any> = await axios.get(
-          'http://localhost:3010/statistics/' +
+          'https://netflix-webapp-adb.herokuapp.com/statistics/' +
             filterOptions.toLowerCase() +
             'List',
         );
@@ -132,7 +132,7 @@ const SearchFiltersViews: React.FC<ActiveProps> = ({
     const getSearchList = async () => {
       try {
         const options: AxiosResponse<any> = await axios.get(
-          'http://localhost:3010/search/' +
+          'https://netflix-webapp-adb.herokuapp.com/search/' +
             filterOptions.toLowerCase() +
             'List',
         );

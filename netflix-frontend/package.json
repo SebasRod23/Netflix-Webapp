@@ -1,6 +1,5 @@
 {
   "name": "netflix-webapp",
-  "homepage": "http://SebasRod23.github.io/netflix-webapp",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
